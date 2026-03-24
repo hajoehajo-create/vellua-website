@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vellúa | Spaces of Peace</title>
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Fixed Animated Background -->
+    <div class="bg-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <a href="#home" class="logo">vellúa</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#discography">Discography</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content layered above background -->
+    <main class="content-wrapper">
+        
+        <!-- Home / Hero Section -->
+        <section id="home" class="view-section hero">
+            <div class="glass-card hero-card fade-in">
+                <h1>vellúa</h1>
+                <p>Creating spaces of peace in a loud world.</p>
+                <div class="hero-buttons">
+                    <a href="#discography" class="cta-button">Latest Release</a>
+                    <a href="https://ko-fi.com/" target="_blank" class="cta-button outline">Support Us ❤️</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="view-section split-section">
+            <div class="glass-panel text-content fade-in-left">
+                <h2>Our Philosophy</h2>
+                <p>Welcome to <strong>vellúa</strong>. We create musical pieces where listeners can pause, step out of the daily rush, and find tranquility. It is a bridge between silence and understanding, utilizing traditions from the Middle East, Eastern Europe, and Central Asia.</p>
+                
+                <h3>The Vellúan Language</h3>
+                <p>In our music, you will hear "Vellúan" — an invented language designed to transcend words and communicate directly with emotions, bypassing logical interpretation.</p>
+
+                <h3>Haval & Joe</h3>
+                <p>We are two brothers searching for a sound that resonates deeply. Through blending acoustic instruments naturally and authentically, our journey has been an exploration of roots and spiritual resonance.</p>
+            </div>
+            <div class="image-box fade-in-right">
+                <img src="/Users/hajohajo/.gemini/antigravity/brain/8fb6380c-f74d-40f7-9c12-39e298446c92/vellua_duo_1774386189767.png" alt="Haval & Joe - vellúa Duo">
+            </div>
+        </section>
+
+        <!-- Discography Section -->
+        <section id="discography" class="view-section">
+            <div class="section-header fade-in">
+                <h2>Discography</h2>
+                <p>Since 2018, exploring sounds from "Portrait of Souls" to our latest singles.</p>
+            </div>
+            <div class="grid-container">
+                <div class="glass-card album-card pulse-hover">
+                    <img src="/Users/hajohajo/.gemini/antigravity/brain/8fb6380c-f74d-40f7-9c12-39e298446c92/vellua_album_1774386454233.png" alt="I Remember">
+                    <h3>I Remember</h3>
+                    <p>Single (Dec 2024)</p>
+                </div>
+                <div class="glass-card album-card pulse-hover">
+                    <img src="/Users/hajohajo/.gemini/antigravity/brain/8fb6380c-f74d-40f7-9c12-39e298446c92/vellua_album_1774386454233.png" alt="Sunrise in Babylon">
+                    <h3>Sunrise in Babylon</h3>
+                    <p>Single</p>
+                </div>
+                <div class="glass-card album-card pulse-hover">
+                    <img src="/Users/hajohajo/.gemini/antigravity/brain/8fb6380c-f74d-40f7-9c12-39e298446c92/vellua_album_1774386454233.png" alt="Ev Jiyan">
+                    <h3>Ev Jiyan</h3>
+                    <p>Single</p>
+                </div>
+                <div class="glass-card album-card pulse-hover">
+                    <img src="/Users/hajohajo/.gemini/antigravity/brain/8fb6380c-f74d-40f7-9c12-39e298446c92/vellua_album_1774386454233.png" alt="Portrait of Souls">
+                    <h3>Portrait of Souls</h3>
+                    <p>Debut Album (10 Tracks)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="view-section contact-section">
+            <div class="glass-card form-card fade-in">
+                <h2>Get in Touch</h2>
+                <p>For bookings, collaborations or just saying hello.</p>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="text" placeholder="Subject">
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="cta-button">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="glass-footer">
+                <p>&copy; 2026 vellúa music</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a> | 
+                    <a href="#">Presskit</a>
+                </div>
+                <div class="socials">
+                    <a href="#">Spotify</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Simple Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .pulse-hover').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
