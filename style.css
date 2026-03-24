@@ -44,15 +44,15 @@ h1, h2, h3, .logo {
 .shape {
     position: absolute;
     border-radius: 50%;
-    filter: blur(120px);
     opacity: 0.6;
+    will-change: transform;
     animation: floating 25s infinite alternate ease-in-out;
 }
 
-.shape-1 { width: 600px; height: 600px; background: #9333ea; top: -150px; left: -150px; }
-.shape-2 { width: 500px; height: 500px; background: #3b82f6; bottom: -150px; right: -100px; animation-delay: -5s; animation-duration: 30s; }
-.shape-3 { width: 700px; height: 700px; background: #0f766e; top: 30%; left: 40%; transform: translate(-50%, -50%); animation-delay: -10s; }
-.shape-4 { width: 400px; height: 400px; background: #be185d; bottom: 20%; left: 10%; animation-delay: -15s; animation-duration: 20s; }
+.shape-1 { width: 800px; height: 800px; background: radial-gradient(circle at center, rgba(147, 51, 234, 0.5) 0%, rgba(147, 51, 234, 0) 60%); top: -250px; left: -250px; }
+.shape-2 { width: 700px; height: 700px; background: radial-gradient(circle at center, rgba(59, 130, 246, 0.5) 0%, rgba(59, 130, 246, 0) 60%); bottom: -250px; right: -200px; animation-delay: -5s; animation-duration: 30s; }
+.shape-3 { width: 900px; height: 900px; background: radial-gradient(circle at center, rgba(15, 118, 110, 0.5) 0%, rgba(15, 118, 110, 0) 60%); top: 30%; left: 40%; transform: translate(-50%, -50%); animation-delay: -10s; }
+.shape-4 { width: 600px; height: 600px; background: radial-gradient(circle at center, rgba(190, 24, 93, 0.5) 0%, rgba(190, 24, 93, 0) 60%); bottom: 20%; left: 10%; animation-delay: -15s; animation-duration: 20s; }
 
 @keyframes floating {
     0% { transform: translate(0, 0) scale(1) rotate(0deg); }
@@ -67,9 +67,9 @@ h1, h2, h3, .logo {
     top: 0;
     width: 100%;
     z-index: 100;
-    background: rgba(15, 23, 42, 0.4);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
@@ -130,8 +130,8 @@ h1, h2, h3, .logo {
 /* Glassmorphism Styles */
 .glass-card, .glass-panel, .glass-footer {
     background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
