@@ -67,9 +67,7 @@ h1, h2, h3, .logo {
     top: 0;
     width: 100%;
     z-index: 100;
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.85); /* Increased opacity to compensate for removed blur */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
@@ -146,9 +144,7 @@ h1, h2, h3, .logo {
 
 /* Glassmorphism Styles */
 .glass-card, .glass-panel, .glass-footer {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.08); /* Increased base opacity slightly for legibility without blur hit */
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
