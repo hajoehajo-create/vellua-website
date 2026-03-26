@@ -17,16 +17,17 @@ html {
 }
 
 body {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Cormorant Garamond', serif;
     color: var(--text-primary);
     background-color: var(--bg-dark);
     line-height: 1.6;
     overflow-x: hidden;
+    font-size: 1.2rem;
 }
 
-h1, h2, h3, .logo {
-    font-family: 'Playfair Display', serif;
-    font-weight: 500;
+h1, h2, h3, h4, .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
 }
 
 /* Background Animated Gradient Shapes (Fixed) */
