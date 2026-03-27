@@ -603,8 +603,8 @@ footer {
 
     /* About */
     .about-card { flex-direction: column; }
-    .about-image-column { min-height: 300px; position: relative; }
-    .about-hero-img { position: relative; width: 100%; height: 300px; object-fit: cover; }
+    .about-image-column { min-height: unset; aspect-ratio: 1 / 1; position: relative; }
+    .about-hero-img { position: absolute; width: 100%; height: 100%; object-fit: cover; }
     .about-text-column { padding: 3rem 2rem; }
     .about-grid { grid-template-columns: 1fr; }
 
@@ -657,7 +657,7 @@ footer {
     .about-lead { font-size: 1.1rem; margin-bottom: 1.5rem; }
     .about-grid { gap: 1rem; margin-bottom: 1.5rem; }
     .about-box { padding: 1.2rem; }
-    .about-hero-img { height: 240px; }
+    .about-image-column { aspect-ratio: 1 / 1; }
 
     /* Contact */
     .form-card { padding: 2.5rem 1.5rem; }
