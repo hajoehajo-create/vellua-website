@@ -33,8 +33,19 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+        <a href="#home" class="mobile-nav-link">Home</a>
+        <a href="#discography" class="mobile-nav-link">Discography</a>
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
 
     <!-- Main Content layered above background -->
     <main class="content-wrapper">
@@ -42,16 +53,11 @@
         <!-- Home / Hero Section -->
         <section id="home" class="modern-hero">
             <div class="glass-card hero-card fade-in">
-                <div class="hero-content">
+                <div class="hero-content-top">
                     <img src="vellua-white-big.png" alt="vellúa logo" class="hero-logo">
                     <h1 style="display:none;">vellúa</h1>
                     <p class="slide-tag">NEW RELEASE</p>
                     <h2 class="slide-title">And I See</h2>
-                    <p class="hero-desc">Creating spaces of peace in a loud world. Discover our brand new single 'And I See', connecting ancient acoustic traditions with modern sonic landscapes.</p>
-                    <div class="hero-buttons">
-                        <a href="https://open.spotify.com/intl-de/album/4i433wK4y4DJVjuJ3Odcq1" target="_blank" class="cta-button">Listen on Spotify</a>
-                        <a href="https://ko-fi.com/vellua" target="_blank" class="cta-button outline">Support Us ❤️</a>
-                    </div>
                 </div>
                 <div class="hero-image-wrapper">
                     <img src="https://i.scdn.co/image/ab67616d0000b273171cb89ac73e7ad198048ef7"
@@ -60,6 +66,13 @@
                         <span class="dot active"></span>
                         <span class="dot"></span>
                         <span class="dot"></span>
+                    </div>
+                </div>
+                <div class="hero-content-bottom">
+                    <p class="hero-desc">Creating spaces of peace in a loud world. Discover our brand new single 'And I See', connecting ancient acoustic traditions with modern sonic landscapes.</p>
+                    <div class="hero-buttons">
+                        <a href="https://open.spotify.com/intl-de/album/4i433wK4y4DJVjuJ3Odcq1" target="_blank" class="cta-button">Listen on Spotify</a>
+                        <a href="https://ko-fi.com/vellua" target="_blank" class="cta-button outline">Support Us ❤️</a>
                     </div>
                 </div>
             </div>
@@ -174,17 +187,34 @@
     </main>
 
     <script>
-        // Simple Intersection Observer for scroll animations
+        // Scroll animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .pulse-hover').forEach(el => {
             observer.observe(el);
+        });
+
+        // Hamburger / Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function toggleMenu(open) {
+            hamburger.classList.toggle('open', open);
+            mobileMenu.classList.toggle('open', open);
+            hamburger.setAttribute('aria-expanded', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('open');
+            toggleMenu(!isOpen);
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => toggleMenu(false));
         });
     </script>
 </body>

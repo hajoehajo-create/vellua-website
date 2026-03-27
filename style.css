@@ -80,6 +80,7 @@ h1, h2, h3, h4, .logo {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .logo {
@@ -123,6 +124,64 @@ h1, h2, h3, h4, .logo {
 
 .nav-links a:hover {
     color: #cbd5e1;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 200;
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile Nav Overlay */
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 30, 0.97);
+    z-index: 150;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+}
+
+.mobile-menu-overlay.open {
+    display: flex;
+}
+
+.mobile-menu-overlay a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.mobile-menu-overlay a:hover {
+    color: var(--accent);
 }
 
 /* Main Content Wrapper */
@@ -173,17 +232,28 @@ h1, h2, h3, h4, .logo {
 }
 
 .hero-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "top    image"
+        "bottom image";
+    align-items: start;
     padding: 4rem;
     width: 100%;
-    gap: 4rem;
+    gap: 2rem 4rem;
 }
 
-.hero-content {
-    flex: 1;
+.hero-content-top {
+    grid-area: top;
     text-align: left;
+    align-self: end;
+}
+
+.hero-content-bottom {
+    grid-area: bottom;
+    text-align: left;
+    align-self: start;
 }
 
 .slide-tag {
@@ -216,11 +286,12 @@ h1, h2, h3, h4, .logo {
 }
 
 .hero-image-wrapper {
-    flex: 1;
+    grid-area: image;
     position: relative;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    align-self: center;
 }
 
 .slide-image {
@@ -496,15 +567,110 @@ footer {
 
 .visible { opacity: 1; transform: translate(0); }
 
-/* Responsive */
+/* =========================================
+   RESPONSIVE STYLES
+   ========================================= */
+
+/* Tablet */
 @media (max-width: 900px) {
-    .split-section { flex-direction: column; }
-    .hero-card h1 { font-size: 4rem; }
-    .nav-links { display: none; } /* Could add hamburger menu for mobile */
+    /* Nav */
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    /* Hero */
+    .hero-card {
+        display: flex;
+        flex-direction: column;
+        padding: 2.5rem 2rem;
+        gap: 1.5rem;
+    }
+    .modern-hero {
+        min-height: auto;
+        padding: 2rem 1.5rem;
+        margin: 1rem auto;
+    }
+    .hero-content-top, .hero-content-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-self: stretch;
+        text-align: center;
+    }
+    .hero-logo { margin: 0 0 1rem; }
+    .hero-buttons { justify-content: center; flex-wrap: wrap; }
+    .hero-image-wrapper { width: 100%; max-width: 340px; margin: 0 auto; }
+    .slide-title { font-size: 2.5rem; }
+
+    /* About */
+    .about-card { flex-direction: column; }
+    .about-image-column { min-height: 300px; position: relative; }
+    .about-hero-img { position: relative; width: 100%; height: 300px; object-fit: cover; }
+    .about-text-column { padding: 3rem 2rem; }
+    .about-grid { grid-template-columns: 1fr; }
+
+    /* Discography */
+    .section-header h2 { font-size: 2.5rem; }
+    .view-section { padding: 4rem 1.5rem; }
+
+    /* Footer */
+    .glass-footer {
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+        padding: 2rem;
+    }
 }
 
+/* Mobile */
 @media (max-width: 600px) {
-    .hero-card { padding: 3rem 2rem; }
-    .hero-buttons { flex-direction: column; }
-    .glass-footer { flex-direction: column; gap: 1rem; text-align: center; }
+    body { font-size: 1rem; }
+
+    /* Nav */
+    .nav-content { padding: 1rem 1.25rem; }
+    .logo img { height: 28px; }
+
+    /* Hero */
+    .hero-card { padding: 2rem 1.5rem; gap: 1.25rem; }
+    .hero-logo { max-width: 220px; margin-bottom: 1rem; }
+    .slide-title { font-size: 2rem; }
+    .hero-desc { font-size: 1rem; margin-bottom: 2rem; }
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    .cta-button { width: 100%; max-width: 280px; text-align: center; }
+
+    /* Discography */
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 10px;
+    }
+    .section-header { margin-bottom: 2.5rem; }
+    .section-header h2 { font-size: 2rem; }
+    .section-header p { font-size: 0.95rem; }
+    .view-section { padding: 3rem 1.25rem; }
+
+    /* About */
+    .about-text-column { padding: 2rem 1.5rem; }
+    .about-text-column h2 { font-size: 2rem !important; margin-bottom: 1.25rem !important; }
+    .about-lead { font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .about-grid { gap: 1rem; margin-bottom: 1.5rem; }
+    .about-box { padding: 1.2rem; }
+    .about-hero-img { height: 240px; }
+
+    /* Contact */
+    .form-card { padding: 2.5rem 1.5rem; }
+    .form-card h2 { font-size: 2rem; }
+    .contact-form input, .contact-form textarea { padding: 0.85rem 1.2rem; font-size: 0.95rem; }
+
+    /* Footer */
+    .glass-footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1.5rem;
+    }
+    .footer-links, .socials { justify-content: center; flex-wrap: wrap; }
+    footer { padding: 1.25rem; }
 }
