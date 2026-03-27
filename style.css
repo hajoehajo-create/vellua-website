@@ -508,6 +508,79 @@ h1, h2, h3, h4, .logo {
     gap: 1.2rem;
 }
 
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: left;
+}
+
+.field-error {
+    font-size: 0.82rem;
+    color: #f87171;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s, max-height 0.3s;
+}
+
+.form-field.invalid .field-error {
+    opacity: 1;
+    max-height: 2rem;
+}
+
+.form-field.invalid input,
+.form-field.invalid textarea {
+    border-color: rgba(248, 113, 113, 0.6);
+    animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    60%       { transform: translateX(6px); }
+}
+
+/* Success State */
+.form-success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    animation: fadeUp 0.5s ease;
+}
+
+.form-success.visible {
+    display: flex;
+}
+
+.success-icon {
+    font-size: 3rem;
+    animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+    0%   { transform: scale(0); }
+    70%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.form-success h3 {
+    font-size: 1.5rem;
+}
+
+.form-success p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
 .contact-form input, .contact-form textarea {
     width: 100%;
     padding: 1rem 1.5rem;

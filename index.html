@@ -159,13 +159,30 @@
             <div class="glass-card form-card fade-in">
                 <h2>Get in Touch</h2>
                 <p>For bookings, collaborations or just saying hello.</p>
-                <form class="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <input type="text" placeholder="Subject">
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
-                    <button type="submit" class="cta-button">Send Message</button>
+                <form class="contact-form" id="contactForm" novalidate>
+                    <div class="form-field">
+                        <input type="text" id="contactName" placeholder="Your Name" required>
+                        <span class="field-error">Please enter your name.</span>
+                    </div>
+                    <div class="form-field">
+                        <input type="email" id="contactEmail" placeholder="Your Email" required>
+                        <span class="field-error">Please enter a valid email address.</span>
+                    </div>
+                    <div class="form-field">
+                        <input type="text" id="contactSubject" placeholder="Subject">
+                    </div>
+                    <div class="form-field">
+                        <textarea id="contactMessage" placeholder="Your Message" rows="5" required></textarea>
+                        <span class="field-error">Please enter a message.</span>
+                    </div>
+                    <button type="submit" class="cta-button" id="contactSubmit">Send Message</button>
                 </form>
+                <div class="form-success" id="formSuccess">
+                    <div class="success-icon">✉️</div>
+                    <h3>Your email client is ready!</h3>
+                    <p>A draft was prepared with your message. Just hit send in your email app.</p>
+                    <button class="cta-button outline" id="formReset">Send another message</button>
+                </div>
             </div>
         </section>
 
@@ -215,6 +232,75 @@
 
         document.querySelectorAll('.mobile-nav-link').forEach(link => {
             link.addEventListener('click', () => toggleMenu(false));
+        });
+
+        // Contact Form Handler
+        const form       = document.getElementById('contactForm');
+        const success    = document.getElementById('formSuccess');
+        const resetBtn   = document.getElementById('formReset');
+        const RECIPIENT  = 'info@vellua-music.com';
+
+        function validate(field, condition) {
+            const wrapper = field.closest('.form-field');
+            if (!wrapper) return condition;
+            // Remove then re-add invalid to re-trigger shake animation
+            wrapper.classList.remove('invalid');
+            void wrapper.offsetWidth; // reflow
+            if (!condition) wrapper.classList.add('invalid');
+            else wrapper.classList.remove('invalid');
+            return condition;
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name    = document.getElementById('contactName');
+            const email   = document.getElementById('contactEmail');
+            const subject = document.getElementById('contactSubject');
+            const message = document.getElementById('contactMessage');
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            const ok = [
+                validate(name,    name.value.trim().length > 0),
+                validate(email,   emailRegex.test(email.value.trim())),
+                validate(message, message.value.trim().length > 0),
+            ].every(Boolean);
+
+            if (!ok) return;
+
+            const subjectLine = subject.value.trim()
+                ? subject.value.trim()
+                : 'Message from vellua-music.com';
+
+            const body =
+                `Name: ${name.value.trim()}\n` +
+                `Email: ${email.value.trim()}\n\n` +
+                `${message.value.trim()}`;
+
+            const mailto = `mailto:${RECIPIENT}` +
+                `?subject=${encodeURIComponent(subjectLine)}` +
+                `&body=${encodeURIComponent(body)}`;
+
+            window.location.href = mailto;
+
+            // Show success state
+            form.style.opacity = '0';
+            form.style.transform = 'translateY(-10px)';
+            form.style.transition = 'opacity 0.3s, transform 0.3s';
+            setTimeout(() => {
+                form.style.display = 'none';
+                success.classList.add('visible');
+            }, 300);
+        });
+
+        resetBtn.addEventListener('click', () => {
+            form.reset();
+            document.querySelectorAll('.form-field').forEach(f => f.classList.remove('invalid'));
+            success.classList.remove('visible');
+            form.style.display = '';
+            form.style.opacity = '1';
+            form.style.transform = '';
         });
     </script>
 </body>
