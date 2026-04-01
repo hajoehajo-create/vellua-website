@@ -153,6 +153,14 @@ def update_index_html(discography):
     # Update Hero Section
     import re
     
+    # Update OpenGraph Tags
+    content = re.sub(r'(<meta property="og:title" content=")(.*?)(">)', f'\\1{latest["title"]} - vellúa\\3', content)
+    content = re.sub(r'(<meta property="og:image" content=")(.*?)(">)', f'\\1{latest["image"]}\\3', content)
+    
+    # Generic description logic used across both Hero and OG
+    new_desc = f"Creating spaces of peace in a loud world. Discover our brand new single '{latest['title']}', connecting ancient acoustic traditions with modern sonic landscapes."
+    content = re.sub(r'(<meta property="og:description" content=")(.*?)(">)', f'\\1{new_desc}\\3', content)
+    
     # Update Hero Title
     content = re.sub(r'(<h2 class="slide-title">)(.*?)(</h2>)', f'\\1{latest["title"]}\\3', content)
     
@@ -163,10 +171,8 @@ def update_index_html(discography):
     # Update Hero Spotify Link
     content = re.sub(r'(<a href=")(.*?)(" target="_blank" class="cta-button">Listen on Spotify</a>)', f'\\1{latest["url"]}\\3', content)
     
-    # Update Hero Description (optional but nice)
-    # This matches the paragraph after the slide dots / hero image wrapper
+    # Update Hero Description
     hero_desc_pattern = re.compile(r'(<p class="hero-desc">)(.*?)(</p>)', re.DOTALL)
-    new_desc = f"Creating spaces of peace in a loud world. Discover our brand new single '{latest['title']}', connecting ancient acoustic traditions with modern sonic landscapes."
     content = hero_desc_pattern.sub(f'\\1{new_desc}\\3', content)
 
     # Update Discography Grid
