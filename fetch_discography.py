@@ -164,9 +164,9 @@ def update_index_html(discography):
     # Update Hero Title
     content = re.sub(r'(<h2 class="slide-title">)(.*?)(</h2>)', f'\\1{latest["title"]}\\3', content)
     
-    # Update Hero Image
-    content = re.sub(r'(<img src=")(.*?)(" alt=")(.*?)(" class="slide-image">)', 
-                     f'\\1{latest["image"]}\\3{latest["title"]} Cover\\5', content)
+    # Update Hero Image (specifically within the hero-image-wrapper to avoid Nav logo)
+    image_pattern = re.compile(r'(<div class="hero-image-wrapper">.*?<img src=")(.*?)(".*?\balt=")(.*?)(".*?\bclass="slide-image">)', re.DOTALL)
+    content = image_pattern.sub(f'\\1{latest["image"]}\\3{latest["title"]} Cover\\5', content)
     
     # Update Hero Spotify Link
     content = re.sub(r'(<a href=")(.*?)(" target="_blank" class="cta-button">Listen on Spotify</a>)', f'\\1{latest["url"]}\\3', content)
