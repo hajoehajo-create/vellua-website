@@ -20,7 +20,8 @@ def deploy():
         "index.html", 
         "style.css", 
         "Vellua-HH-Red-Backround-edited-scaled.jpg",
-        "vellua-white-big.png"
+        "vellua-white-big.png",
+        "favicon.png"
     ]
     
     try:
