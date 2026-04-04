@@ -188,6 +188,10 @@ def update_index_html(discography):
         f.write(updated_content)
     
     print("\nSuccessfully updated index.html with Hero Section and Grid.")
+    
+    # Auto-deploy
+    from deploy import deploy as sftp_deploy
+    sftp_deploy()
 
 if __name__ == "__main__":
     fetch_discography()
