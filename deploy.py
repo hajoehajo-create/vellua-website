@@ -16,10 +16,12 @@ def deploy():
         return
 
     # Files to upload
-    files_to_upload = ["index.html", "style.css"]
-    
-    # Images (if they exist locally and need to be uploaded)
-    # For now, we only upload the main files
+    files_to_upload = [
+        "index.html", 
+        "style.css", 
+        "Vellua-HH-Red-Backround-edited-scaled.jpg",
+        "vellua-white-big.png"
+    ]
     
     try:
         print(f"Connecting to {host} via SFTP...")
