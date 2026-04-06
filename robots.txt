@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Schließe Skripte und interne Konfigurationen aus
+Disallow: /fetch_discography.py
+Disallow: /deploy.py
+Disallow: /create_favicon.py
+Disallow: /output.log
+Disallow: /.env
+Disallow: /.env.example
+Disallow: /__pycache__/
+
+# Pfad zur Sitemap (falls vorhanden oder geplant)
+Sitemap: https://vellua-music.com/sitemap.xml
