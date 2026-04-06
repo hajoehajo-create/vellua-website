@@ -878,7 +878,7 @@ footer {
 
 .slider-wrapper {
     position: relative;
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 4rem; /* Space for the absolute buttons */
 }
