@@ -880,9 +880,7 @@ footer {
     position: relative;
     max-width: 1100px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    padding: 0 4rem; /* Space for the absolute buttons */
 }
 
 .slider-viewport {
@@ -903,8 +901,11 @@ footer {
 }
 
 .slider-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 50%;
+    margin-top: -22px; /* Half of height to perfectly center vertically */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: var(--text);
     width: 44px;
     height: 44px;
@@ -917,12 +918,19 @@ footer {
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    flex-shrink: 0;
-    z-index: 2;
+    z-index: 10;
+}
+
+.prev-btn {
+    left: 0.5rem;
+}
+
+.next-btn {
+    right: 0.5rem;
 }
 
 .slider-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.25);
     transform: scale(1.1);
 }
 
@@ -956,10 +964,28 @@ footer {
     .artist-slider .artist-card-mini {
         flex: 0 0 calc(50% - 1rem); /* 2 items on tablet */
     }
+
+    .slider-wrapper {
+        padding: 0 3rem;
+    }
 }
 
 @media (max-width: 600px) {
     .artist-slider .artist-card-mini {
         flex: 0 0 100%; /* 1 item on mobile */
     }
+    
+    .slider-wrapper {
+        padding: 0 1.5rem;
+    }
+
+    .slider-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        margin-top: -18px; /* Recenter smaller button */
+    }
+    
+    .prev-btn { left: -0.5rem; }
+    .next-btn { right: -0.5rem; }
 }
