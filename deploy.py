@@ -20,9 +20,6 @@ def deploy():
         "index.html", 
         "featured-artists.html",
         "style.css", 
-        "Vellua-HH-Red-Backround-edited-scaled.jpg",
-        "vellua-white-big.png",
-        "favicon.png",
         "robots.txt",
         "sitemap.xml"
     ]
@@ -40,16 +37,30 @@ def deploy():
         try:
             sftp.chdir(remote_path)
         except IOError:
-            print(f"Remote directory {remote_path} does not exist. Attempting to create it...")
+            print(f"Remote directory {remote_path} does not exist. Creating it...")
             sftp.mkdir(remote_path)
             sftp.chdir(remote_path)
 
+        # Upload root files
         for filename in files_to_upload:
             if os.path.exists(filename):
                 print(f"Uploading {filename}...")
                 sftp.put(filename, filename)
-            else:
-                print(f"Skipping {filename} (not found locally).")
+
+        # Upload images directory
+        if os.path.exists("images"):
+            remote_images_dir = "images"
+            try:
+                sftp.mkdir(remote_images_dir)
+            except IOError:
+                pass # Already exists
+            
+            print("Uploading images directory...")
+            for img_file in os.listdir("images"):
+                local_img_path = os.path.join("images", img_file)
+                if os.path.isfile(local_img_path):
+                    print(f"  Uploading {img_file}...")
+                    sftp.put(local_img_path, os.path.join(remote_images_dir, img_file))
 
         sftp.close()
         ssh.close()
