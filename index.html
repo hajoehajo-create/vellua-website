@@ -19,7 +19,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="style.css?v=1.4">
 </head>
 
 <body>
@@ -258,6 +258,7 @@
                     </div>
                 </div>
                 <button class="slider-btn next-btn" aria-label="Next artists">&#10095;</button>
+                <div class="slider-dots" id="sliderDots"></div>
             </div>
         </section>
 
@@ -461,6 +462,7 @@
         const artistSlider = document.getElementById('artistSlider');
         const prevBtn = document.querySelector('.prev-btn');
         const nextBtn = document.querySelector('.next-btn');
+        const sliderDots = document.getElementById('sliderDots');
 
         if (artistSlider && prevBtn && nextBtn) {
             let currentIndex = 0;
@@ -473,7 +475,6 @@
                 const gap = parseFloat(window.getComputedStyle(artistSlider).gap) || 0;
                 const containerWidth = artistSlider.parentElement.offsetWidth;
                 
-                // Estimate visible items (protect against 0)
                 let visibleItems = Math.round(containerWidth / (cardWidth + gap));
                 if (visibleItems < 1) visibleItems = 1;
                 
@@ -491,6 +492,22 @@
                 
                 nextBtn.style.opacity = currentIndex >= maxIndex ? '0.3' : '1';
                 nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
+
+                // Update Dots
+                if(sliderDots) {
+                    const totalDots = maxIndex + 1;
+                    sliderDots.innerHTML = '';
+                    for (let i = 0; i < totalDots; i++) {
+                        const dot = document.createElement('div');
+                        dot.className = `slider-dot ${i === currentIndex ? 'active' : ''}`;
+                        // Allow clicking dots to navigate
+                        dot.addEventListener('click', () => {
+                            currentIndex = i;
+                            updateSlider();
+                        });
+                        sliderDots.appendChild(dot);
+                    }
+                }
             }
 
             nextBtn.addEventListener('click', () => {

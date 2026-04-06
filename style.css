@@ -970,16 +970,37 @@ footer {
     }
 }
 
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(1.2);
+}
+
 @media (max-width: 600px) {
     .artist-slider .artist-card-mini {
-        flex: 0 0 85%; /* Card is 85% width so the next one peeks out visually */
+        flex: 0 0 100%; /* 1 fully visible card on mobile */
     }
     
     .slider-wrapper {
-        padding: 0; /* Remove inner padding so it fills to the section edges */
+        padding: 0;
     }
 
     .slider-btn {
-        display: none; /* Hide buttons on mobile, swipe only is perfectly intuitive now */
+        display: none;
     }
 }
