@@ -972,20 +972,14 @@ footer {
 
 @media (max-width: 600px) {
     .artist-slider .artist-card-mini {
-        flex: 0 0 100%; /* 1 item on mobile */
+        flex: 0 0 85%; /* Card is 85% width so the next one peeks out visually */
     }
     
     .slider-wrapper {
-        padding: 0 1.5rem;
+        padding: 0; /* Remove inner padding so it fills to the section edges */
     }
 
     .slider-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-        margin-top: -18px; /* Recenter smaller button */
+        display: none; /* Hide buttons on mobile, swipe only is perfectly intuitive now */
     }
-    
-    .prev-btn { left: -0.5rem; }
-    .next-btn { right: -0.5rem; }
 }
