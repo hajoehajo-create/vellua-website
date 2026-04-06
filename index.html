@@ -527,6 +527,68 @@
                 }
             });
 
+            // Touch / Swipe Support for Mobile
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+            let touchStartTime = 0;
+
+            artistSlider.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+                artistSlider.style.transition = 'none'; // remove transition while dragging
+                touchStartTime = Date.now();
+            }, { passive: true });
+
+            artistSlider.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                currentX = e.touches[0].clientX;
+                const diffX = currentX - startX;
+                
+                // Add resistance if trying to drag past edges
+                const card = artistSlider.querySelector('.artist-card-mini');
+                const cardWidth = card.offsetWidth;
+                const gap = parseFloat(window.getComputedStyle(artistSlider).gap) || 0;
+                let slideAmount = currentIndex * (cardWidth + gap);
+                
+                let targetTranslate = -slideAmount + diffX;
+                artistSlider.style.transform = `translateX(${targetTranslate}px)`;
+            }, { passive: true });
+
+            artistSlider.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                artistSlider.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+                
+                const diffX = currentX - startX;
+                const touchDuration = Date.now() - touchStartTime;
+                
+                const card = artistSlider.querySelector('.artist-card-mini');
+                const cardWidth = card.offsetWidth;
+                const gap = parseFloat(window.getComputedStyle(artistSlider).gap) || 0;
+                const containerWidth = artistSlider.parentElement.offsetWidth;
+                
+                let visibleItems = Math.round(containerWidth / (cardWidth + gap));
+                if (visibleItems < 1) visibleItems = 1;
+
+                if (Math.abs(diffX) > 50 || touchDuration < 250) { // minimum distance or fast swipe
+                    if (diffX < 0) { // swiped left (next)
+                        const maxIndex = artistSlider.children.length - visibleItems;
+                        if (currentIndex < maxIndex) {
+                            currentIndex += visibleItems;
+                            if (currentIndex > maxIndex) currentIndex = maxIndex;
+                        }
+                    } else if (diffX > 0) { // swiped right (prev)
+                        if (currentIndex > 0) {
+                            currentIndex -= visibleItems;
+                            if (currentIndex < 0) currentIndex = 0;
+                        }
+                    }
+                }
+                
+                updateSlider();
+            });
+
             // Re-calc on resize
             window.addEventListener('resize', updateSlider);
             // Delay initial set to allow CSS mapping
