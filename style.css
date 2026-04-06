@@ -6,8 +6,11 @@
 }
 
 /* Base Reset & Typography */
-html {
+html, body {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
 }
 
 * {
@@ -21,7 +24,6 @@ body {
     color: var(--text-primary);
     background-color: var(--bg-dark);
     line-height: 1.6;
-    overflow-x: hidden;
     font-size: 1.15rem;
 }
 
@@ -994,10 +996,16 @@ footer {
 @media (max-width: 600px) {
     .artist-slider .artist-card-mini {
         flex: 0 0 100%; /* 1 fully visible card on mobile */
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .slider-wrapper {
         padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden; /* Strictly prevent any width explosion on mobile */
     }
 
     .slider-btn {
