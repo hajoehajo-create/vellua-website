@@ -22,7 +22,8 @@ def deploy():
         "Vellua-HH-Red-Backround-edited-scaled.jpg",
         "vellua-white-big.png",
         "favicon.png",
-        "robots.txt"
+        "robots.txt",
+        "sitemap.xml"
     ]
     
     try:
