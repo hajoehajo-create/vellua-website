@@ -18,6 +18,7 @@ def deploy():
     # Files to upload
     files_to_upload = [
         "index.html", 
+        "featured-artists.html",
         "style.css", 
         "Vellua-HH-Red-Backround-edited-scaled.jpg",
         "vellua-white-big.png",
