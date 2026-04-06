@@ -329,6 +329,11 @@ h1, h2, h3, h4, .logo {
     box-shadow: none;
 }
 
+.cta-button.small {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+}
+
 /* Modern About Section */
 .modern-about {
     max-width: 1200px;
@@ -781,19 +786,36 @@ footer {
     width: 100%;
     aspect-ratio: 1/1;
     overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.5); /* Background for transparent PNGs */
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
 }
 
 .artist-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    object-position: center 5%; /* Higher focus to keep heads in frame during heavy zoom */
+    border-radius: 50%; /* Applied directly to the image too */
+    transform: scale(2.1); /* "Heranziehen" - Aggressive zoom to hide landscape edges */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden; /* Fixes "bleeding" corners in some browsers */
+    mask-image: -webkit-radial-gradient(white, black); /* Forced circular clipping */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
 }
 
-.artist-card:hover .artist-image img {
-    transform: scale(1.05);
+.artist-card:hover .artist-image,
+.artist-card-mini:hover .artist-image {
+    transform: scale(1.02);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.artist-card:hover .artist-image img,
+.artist-card-mini:hover .artist-image img {
+    transform: scale(2.25); /* Subtle extra zoom on hover */
 }
 
 .artist-info h3 {
@@ -801,6 +823,7 @@ footer {
     margin-bottom: 0.5rem;
     background: linear-gradient(to right, #fff, #cbd5e1);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -819,6 +842,47 @@ footer {
     line-height: 1.8;
 }
 
+/* Mini Artist Cards (used in index.html) */
+.artist-card-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    gap: 1.5rem;
+    border-radius: 24px;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.artist-card-mini:hover {
+    transform: translateY(-8px);
+}
+
+.artist-card-mini .artist-image {
+    width: 160px; /* Specific size for small circles */
+    height: 160px;
+}
+
+.artist-card-mini h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.artist-title-mini {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.artist-grid-mini {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
 /* Responsive Arstist Cards */
 @media (max-width: 900px) {
     .artist-card {
@@ -835,5 +899,14 @@ footer {
     
     .artist-info h3 {
         font-size: 2rem;
+    }
+
+    .artist-card-mini {
+        padding: 1.5rem;
+    }
+    
+    .artist-card-mini .artist-image {
+        width: 140px;
+        height: 140px;
     }
 }
