@@ -56,7 +56,7 @@ def spotify_request(url, token):
     headers = {"Authorization": f"Bearer {token}", "User-Agent": "Mozilla/5.0"}
     req = urllib.request.Request(url, headers=headers)
     try:
-        with urllib.request.urlopen(req) as f:
+        with urllib.request.urlopen(req, timeout=10) as f:
             return json.loads(f.read().decode())
     except urllib.error.HTTPError as e:
         print(f"API Request Error: {e.code} for {url}")
@@ -122,17 +122,15 @@ def fetch_discography():
     
     for item in all_items:
         album_id = item["id"]
-        album_url = f"https://api.spotify.com/v1/albums/{album_id}"
-        album_details = spotify_request(album_url, token)
         
-        release_date = album_details["release_date"]
+        release_date = item.get("release_date", "2000-01-01")
         try:
             date_obj = datetime.strptime(release_date, "%Y-%m-%d")
             formatted_date = date_obj.strftime("%d. %B %Y").replace("January", "Januar").replace("February", "Februar").replace("March", "März").replace("May", "Mai").replace("June", "Juni").replace("July", "Juli").replace("October", "Oktober").replace("December", "Dezember")
         except:
             formatted_date = release_date
             
-        image_url = item["images"][0]["url"] if item["images"] else ""
+        image_url = item["images"][0]["url"] if item.get("images") else ""
         
         discography.append({
             "title": item["name"],
@@ -173,7 +171,7 @@ def update_index_html(discography):
     content = re.sub(r'(<h2 class="slide-title">)(.*?)(</h2>)', f'\\1{latest["title"]}\\3', content)
     
     # Update Hero Image (specifically within the hero-image-wrapper to avoid Nav logo)
-    image_pattern = re.compile(r'(<div class="hero-image-wrapper">.*?<img src=")(.*?)(".*?\balt=")(.*?)(".*?\bclass="slide-image">)', re.DOTALL)
+    image_pattern = re.compile(r'(<div class="hero-image-wrapper">\s*<img src=")(.*?)(".*?\balt=")(.*?)(".*?\bclass="slide-image".*?>)', re.DOTALL)
     content = image_pattern.sub(f'\\1{latest["image"]}\\3{latest["title"]} Cover\\5', content)
     
     # Update Hero Spotify Link
