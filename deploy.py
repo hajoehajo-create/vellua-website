@@ -15,10 +15,10 @@ def deploy():
         print("Missing SFTP credentials in .env file.")
         return
 
+    import glob
+    
     # Files to upload
-    files_to_upload = [
-        "index.html", 
-        "featured-artists.html",
+    files_to_upload = glob.glob("*.html") + [
         "style.css", 
         "robots.txt",
         "sitemap.xml"
