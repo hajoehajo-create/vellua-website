@@ -833,7 +833,19 @@
             window.addEventListener('resize', updateBlogSlider);
             setTimeout(updateBlogSlider, 100);
         }
+    </script>
 
+    <!-- Sticky Bottom Audio Player -->
+    <div id="stickyPlayer" class="sticky-player-bar">
+        <div class="sticky-player-inner">
+            <button id="stickyPlayerClose" class="sticky-player-close" aria-label="Close Player">&times;</button>
+            <div id="stickyPlayerIframe" class="sticky-player-iframe">
+                <!-- Spotify Iframe will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
         // Sticky Player Logic
         const stickyPlayer = document.getElementById('stickyPlayer');
         const stickyPlayerIframe = document.getElementById('stickyPlayerIframe');
@@ -878,17 +890,6 @@
             });
         }
     </script>
-
-    <!-- Sticky Bottom Audio Player -->
-    <div id="stickyPlayer" class="sticky-player-bar">
-        <div class="sticky-player-inner">
-            <button id="stickyPlayerClose" class="sticky-player-close" aria-label="Close Player">&times;</button>
-            <div id="stickyPlayerIframe" class="sticky-player-iframe">
-                <!-- Spotify Iframe will be injected here -->
-            </div>
-        </div>
-    </div>
-
     <script src="consent.js"></script>
 </body>
 
