@@ -71,7 +71,7 @@
                 <div class="hero-content-bottom">
                     <p class="hero-desc">Creating spaces of peace in a loud world. Discover our brand new single 'Cuando Vuelvo A Mirarte', connecting ancient acoustic traditions with modern sonic landscapes.</p>
                     <div class="hero-buttons">
-                        <a href="https://open.spotify.com/album/3D4yYorqh6vee5xRwL0CWo" target="_blank" class="cta-button">Listen on Spotify</a>
+                        <a href="https://open.spotify.com/album/3D4yYorqh6vee5xRwL0CWo" class="cta-button play-spotify-link">Play Song</a>
                         <a href="https://ko-fi.com/vellua" target="_blank" class="cta-button outline">Support Us ❤️</a>
                     </div>
                 </div>
@@ -858,9 +858,10 @@
         const stickyPlayerIframe = document.getElementById('stickyPlayerIframe');
         const stickyPlayerClose = document.getElementById('stickyPlayerClose');
 
-        document.querySelectorAll('.disco-item').forEach(img => {
-            const anchor = img.closest('a');
-            if (!anchor) return;
+        // Handle Header Spotify Button and Discography Covers
+        const spotifyLinks = document.querySelectorAll('.grid-container a[href*="spotify.com"], .hero-buttons a[href*="spotify.com"], .play-spotify-link');
+        
+        spotifyLinks.forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const url = this.getAttribute('href');

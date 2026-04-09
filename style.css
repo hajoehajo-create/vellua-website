@@ -1410,11 +1410,14 @@ footer {
 @media (max-width: 600px) {
     .sticky-player-bar {
         padding: 0.8rem 1rem;
+        padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
     }
     .sticky-player-close {
         top: -40px;
         right: 10px;
         width: 35px;
         height: 35px;
+        /* Ensure easy touch targets on mobile */
+        cursor: pointer;
     }
 }
