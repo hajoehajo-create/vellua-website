@@ -613,7 +613,8 @@
                 if (!isDragging) return;
                 currentX = e.touches[0].clientX;
                 const diffX = currentX - startX;
-                if (Math.abs(diffX) > 15) hasMoved = true;
+                // Increased threshold to 25px for "hasMoved" to be more tap-friendly
+                if (Math.abs(diffX) > 25) hasMoved = true;
                 const info = getInfo();
                 if (info) slider.style.transform = `translateX(${-index * (info.cardWidth + info.gap) + diffX}px)`;
             }, { passive: true });
@@ -626,13 +627,15 @@
                 const duration = Date.now() - touchStartTime;
                 const info = getInfo();
                 
-                if (info && (Math.abs(diffX) > 50 || (Math.abs(diffX) > 20 && duration < 200))) {
+                // Only slide if movement was clear/intentional (> 50px)
+                if (info && Math.abs(diffX) > 50) {
                     if (diffX < 0 && index < info.maxIndex) index += info.visibleItems;
                     else if (diffX > 0 && index > 0) index -= info.visibleItems;
                 }
                 update();
             });
 
+            // Prevent clicks ONLY if a real drag occurred
             slider.addEventListener('click', (e) => { 
                 if (hasMoved) { 
                     e.preventDefault(); 
