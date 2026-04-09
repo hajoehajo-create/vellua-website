@@ -282,6 +282,29 @@ h1, h2, h3, h4, .logo {
     color: var(--accent);
 }
 
+.nav-links li a:hover {
+    color: var(--accent);
+}
+
+.nav-cta {
+    background: rgba(29, 185, 84, 0.2);
+    color: #1DB954 !important;
+    border: 1px solid rgba(29, 185, 84, 0.5);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-left: 1rem;
+}
+
+.nav-cta:hover {
+    background: #1DB954;
+    color: white !important;
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.4);
+    transform: translateY(-2px);
+}
+
 
 /* Main Content Wrapper */
 .content-wrapper {
