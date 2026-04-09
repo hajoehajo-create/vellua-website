@@ -173,6 +173,22 @@
         }
     };
 
+    // --- Individual Spotify Loader ---
+    window.loadSpotifyIframe = function(placeholder) {
+        var src = placeholder.getAttribute('data-spotify-src');
+        if (!src) return;
+        var iframe = document.createElement('iframe');
+        iframe.style.borderRadius = '12px';
+        iframe.src = src;
+        iframe.width = '100%';
+        iframe.height = '152';
+        iframe.frameBorder = '0';
+        iframe.allowFullscreen = true;
+        iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+        iframe.loading = 'lazy';
+        placeholder.parentNode.replaceChild(iframe, placeholder);
+    };
+
     // --- Init ---
     document.addEventListener('DOMContentLoaded', function() {
         var consent = getConsent();
