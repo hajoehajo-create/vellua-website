@@ -833,7 +833,58 @@
             window.addEventListener('resize', updateBlogSlider);
             setTimeout(updateBlogSlider, 100);
         }
+
+        // Sticky Player Logic
+        const stickyPlayer = document.getElementById('stickyPlayer');
+        const stickyPlayerIframe = document.getElementById('stickyPlayerIframe');
+        const stickyPlayerClose = document.getElementById('stickyPlayerClose');
+
+        document.querySelectorAll('.disco-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Nur im Desktop/Tablet wird der Player gepoppt, Mobile vielleicht auch? Wir probierens.
+                e.preventDefault();
+                const url = this.getAttribute('href');
+                let spotifyId = '';
+                
+                if (url && url.includes('spotify.com/album/')) {
+                    spotifyId = url.split('spotify.com/album/')[1].split('?')[0];
+                } else if (url && url.includes('spotify.com/track/')) {
+                    spotifyId = url.split('spotify.com/track/')[1].split('?')[0];
+                    // Wir können auch den Track direkt embedden
+                    spotifyId = 'track/' + spotifyId;
+                } else {
+                    spotifyId = 'album/' + spotifyId;
+                }
+                
+                if (spotifyId && spotifyId !== 'album/') {
+                    const embedType = spotifyId.includes('/') ? spotifyId : 'album/' + spotifyId;
+                    const iframeUrl = `https://open.spotify.com/embed/${embedType}?utm_source=generator`;
+                    stickyPlayerIframe.innerHTML = `<iframe style="border-radius:12px" src="${iframeUrl}" width="100%" height="80" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+                    stickyPlayer.classList.add('visible');
+                } else {
+                    window.open(url, '_blank');
+                }
+            });
+        });
+
+        if (stickyPlayerClose) {
+            stickyPlayerClose.addEventListener('click', () => {
+                stickyPlayer.classList.remove('visible');
+                stickyPlayerIframe.innerHTML = ''; // Stop playback
+            });
+        }
     </script>
+
+    <!-- Sticky Bottom Audio Player -->
+    <div id="stickyPlayer" class="sticky-player-bar">
+        <div class="sticky-player-inner">
+            <button id="stickyPlayerClose" class="sticky-player-close" aria-label="Close Player">&times;</button>
+            <div id="stickyPlayerIframe" class="sticky-player-iframe">
+                <!-- Spotify Iframe will be injected here -->
+            </div>
+        </div>
+    </div>
+
     <script src="consent.js"></script>
 </body>
 

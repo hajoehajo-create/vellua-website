@@ -1339,3 +1339,82 @@ footer {
         box-sizing: border-box;
     }
 }
+
+/* ============================================
+   STICKY AUDIO PLAYER
+   ============================================ */
+.sticky-player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+    padding: 1rem 2rem;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+}
+
+.sticky-player-bar.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.sticky-player-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.sticky-player-close {
+    position: absolute;
+    top: -35px;
+    right: 0;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.sticky-player-close:hover {
+    color: var(--text-primary);
+    background: var(--accent);
+    transform: scale(1.1);
+}
+
+.sticky-player-iframe {
+    width: 100%;
+    height: 80px; /* Small height for sticky bar */
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05); /* Placeholder if spotify takes a sec */
+}
+
+@media (max-width: 600px) {
+    .sticky-player-bar {
+        padding: 0.8rem 1rem;
+    }
+    .sticky-player-close {
+        top: -40px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+    }
+}
