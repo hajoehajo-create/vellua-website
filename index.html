@@ -295,45 +295,52 @@
         </section>
 
         <!-- Latest Blog Posts Section -->
-        <section id="blog-preview" class="view-section preview-section fade-in" style="padding-top: 4rem;">
-            <div class="h2-wrapper" style="text-align: center; margin-bottom: 3rem;">
+        <section id="blog-preview" class="view-section fade-in" style="padding-top: 4rem;">
+            <div class="section-header fade-in" style="margin-bottom: 2rem;">
                 <h2>Latest Stories</h2>
-                <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Read our thoughts and the stories behind the music.</p>
+                <p>Read our thoughts and the stories behind the music.</p>
             </div>
-            
-            <div class="blog-grid" id="index-blog-grid" style="margin-bottom: 3rem;">
-                <a href="cuando-vuelvo-a-mirarte.html" class="blog-card fade-in">
-                    <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b273f290cab5b3115fbe69cf0f7e" alt="Cuando Vuelvo A Mirarte Cover">
-                    <div class="blog-content">
-                        <span class="blog-meta">03. April 2026 • New Release</span>
-                        <h2 class="blog-title">Cuando Vuelvo A Mirarte</h2>
-                        <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
-                        <span class="blog-readmore">Read full story →</span>
+
+            <div class="slider-wrapper fade-in" id="blogSliderWrapper">
+                <button class="slider-btn prev-btn" id="blogPrevBtn" aria-label="Previous stories">&#10094;</button>
+                <div class="slider-viewport">
+                    <div class="blog-slider" id="blogSlider">
+                        <a href="cuando-vuelvo-a-mirarte.html" class="blog-slide-card">
+                            <img class="blog-slide-img" src="https://i.scdn.co/image/ab67616d0000b273f290cab5b3115fbe69cf0f7e" alt="Cuando Vuelvo A Mirarte Cover">
+                            <div class="blog-slide-content">
+                                <span class="blog-meta">03. April 2026 • New Release</span>
+                                <h3 class="blog-title">Cuando Vuelvo A Mirarte</h3>
+                                <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                                <span class="blog-readmore">Read full story →</span>
+                            </div>
+                        </a>
+
+                        <a href="and-i-see.html" class="blog-slide-card">
+                            <img class="blog-slide-img" src="https://i.scdn.co/image/ab67616d0000b273171cb89ac73e7ad198048ef7" alt="And I See Cover">
+                            <div class="blog-slide-content">
+                                <span class="blog-meta">12. März 2026 • New Release</span>
+                                <h3 class="blog-title">And I See</h3>
+                                <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                                <span class="blog-readmore">Read full story →</span>
+                            </div>
+                        </a>
+
+                        <a href="and-i-cry.html" class="blog-slide-card">
+                            <img class="blog-slide-img" src="https://i.scdn.co/image/ab67616d0000b2734e020dfee681ca51c99d10ed" alt="And I Cry Cover">
+                            <div class="blog-slide-content">
+                                <span class="blog-meta">06. Februar 2026 • New Release</span>
+                                <h3 class="blog-title">And I Cry</h3>
+                                <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                                <span class="blog-readmore">Read full story →</span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-                
-                <a href="and-i-see.html" class="blog-card fade-in">
-                    <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b273171cb89ac73e7ad198048ef7" alt="And I See Cover">
-                    <div class="blog-content">
-                        <span class="blog-meta">12. März 2026 • New Release</span>
-                        <h2 class="blog-title">And I See</h2>
-                        <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
-                        <span class="blog-readmore">Read full story →</span>
-                    </div>
-                </a>
-                
-                <a href="and-i-cry.html" class="blog-card fade-in">
-                    <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b2734e020dfee681ca51c99d10ed" alt="And I Cry Cover">
-                    <div class="blog-content">
-                        <span class="blog-meta">06. Februar 2026 • New Release</span>
-                        <h2 class="blog-title">And I Cry</h2>
-                        <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
-                        <span class="blog-readmore">Read full story →</span>
-                    </div>
-                </a>
+                </div>
+                <button class="slider-btn next-btn" id="blogNextBtn" aria-label="Next stories">&#10095;</button>
+                <div class="slider-dots" id="blogSliderDots"></div>
             </div>
-            
-            <div style="text-align: center;">
+
+            <div style="text-align: center; margin-top: 2rem;">
                 <a href="blog.html" class="cta-button outline">View All Journal Entries</a>
             </div>
         </section>
@@ -659,6 +666,116 @@
             window.addEventListener('resize', updateSlider);
             // Delay initial set to allow CSS mapping
             setTimeout(updateSlider, 100);
+        }
+
+        // Blog Slider Logic (mirrors artist slider)
+        const blogSlider = document.getElementById('blogSlider');
+        const blogPrevBtn = document.getElementById('blogPrevBtn');
+        const blogNextBtn = document.getElementById('blogNextBtn');
+        const blogSliderDots = document.getElementById('blogSliderDots');
+
+        if (blogSlider && blogPrevBtn && blogNextBtn) {
+            let blogIndex = 0;
+
+            function getCardInfo() {
+                const card = blogSlider.querySelector('.blog-slide-card');
+                if (!card) return null;
+                const cardWidth = card.offsetWidth;
+                const gap = parseFloat(window.getComputedStyle(blogSlider).gap) || 0;
+                const containerWidth = blogSlider.parentElement.offsetWidth;
+                let visibleItems = Math.round(containerWidth / (cardWidth + gap));
+                if (visibleItems < 1) visibleItems = 1;
+                const maxIndex = blogSlider.children.length - visibleItems;
+                return { cardWidth, gap, visibleItems, maxIndex: Math.max(maxIndex, 0) };
+            }
+
+            function updateBlogSlider() {
+                const info = getCardInfo();
+                if (!info) return;
+
+                if (blogIndex > info.maxIndex) blogIndex = info.maxIndex;
+                if (blogIndex < 0) blogIndex = 0;
+
+                const slideAmount = blogIndex * (info.cardWidth + info.gap);
+                blogSlider.style.transform = `translateX(-${slideAmount}px)`;
+
+                blogPrevBtn.style.opacity = blogIndex === 0 ? '0.3' : '1';
+                blogPrevBtn.style.pointerEvents = blogIndex === 0 ? 'none' : 'auto';
+                blogNextBtn.style.opacity = blogIndex >= info.maxIndex ? '0.3' : '1';
+                blogNextBtn.style.pointerEvents = blogIndex >= info.maxIndex ? 'none' : 'auto';
+
+                if (blogSliderDots) {
+                    const totalDots = info.maxIndex + 1;
+                    blogSliderDots.innerHTML = '';
+                    for (let i = 0; i < totalDots; i++) {
+                        const dot = document.createElement('div');
+                        dot.className = `slider-dot ${i === blogIndex ? 'active' : ''}`;
+                        dot.addEventListener('click', () => { blogIndex = i; updateBlogSlider(); });
+                        blogSliderDots.appendChild(dot);
+                    }
+                }
+            }
+
+            blogNextBtn.addEventListener('click', () => {
+                const info = getCardInfo();
+                if (info && blogIndex < info.maxIndex) {
+                    blogIndex += info.visibleItems;
+                    if (blogIndex > info.maxIndex) blogIndex = info.maxIndex;
+                    updateBlogSlider();
+                }
+            });
+
+            blogPrevBtn.addEventListener('click', () => {
+                const info = getCardInfo();
+                if (info && blogIndex > 0) {
+                    blogIndex -= info.visibleItems;
+                    if (blogIndex < 0) blogIndex = 0;
+                    updateBlogSlider();
+                }
+            });
+
+            // Touch / Swipe Support
+            let blogStartX = 0, blogCurrentX = 0, blogDragging = false, blogTouchStart = 0;
+
+            blogSlider.addEventListener('touchstart', (e) => {
+                blogStartX = e.touches[0].clientX;
+                blogDragging = true;
+                blogSlider.style.transition = 'none';
+                blogTouchStart = Date.now();
+            }, { passive: true });
+
+            blogSlider.addEventListener('touchmove', (e) => {
+                if (!blogDragging) return;
+                blogCurrentX = e.touches[0].clientX;
+                const diffX = blogCurrentX - blogStartX;
+                const info = getCardInfo();
+                if (!info) return;
+                const slideAmount = blogIndex * (info.cardWidth + info.gap);
+                blogSlider.style.transform = `translateX(${-slideAmount + diffX}px)`;
+            }, { passive: true });
+
+            blogSlider.addEventListener('touchend', () => {
+                if (!blogDragging) return;
+                blogDragging = false;
+                blogSlider.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+                const diffX = blogCurrentX - blogStartX;
+                const info = getCardInfo();
+                if (!info) { updateBlogSlider(); return; }
+
+                if (Math.abs(diffX) > 50) {
+                    if (diffX < 0 && blogIndex < info.maxIndex) {
+                        blogIndex += info.visibleItems;
+                        if (blogIndex > info.maxIndex) blogIndex = info.maxIndex;
+                    } else if (diffX > 0 && blogIndex > 0) {
+                        blogIndex -= info.visibleItems;
+                        if (blogIndex < 0) blogIndex = 0;
+                    }
+                }
+                updateBlogSlider();
+            });
+
+            window.addEventListener('resize', updateBlogSlider);
+            setTimeout(updateBlogSlider, 100);
         }
     </script>
 </body>
