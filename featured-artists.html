@@ -39,6 +39,7 @@
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="https://open.spotify.com/album/3D4yYorqh6vee5xRwL0CWo" class="nav-cta play-spotify-link">Listen</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
                 <span></span><span></span><span></span>
@@ -48,13 +49,13 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
-        
         <a href="index.html#home" class="mobile-nav-link">Home</a>
         <a href="index.html#discography" class="mobile-nav-link">Discography</a>
         <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
         <a href="index.html#about" class="mobile-nav-link">About</a>
         <a href="blog.html" class="mobile-nav-link">Blog</a>
         <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+        <a href="https://open.spotify.com/album/3D4yYorqh6vee5xRwL0CWo" class="mobile-nav-link play-spotify-link" style="color: #1DB954;">Listen Now</a>
     </div>
 
     <!-- Main Content -->
@@ -237,39 +238,75 @@
         </div>
     </footer>
 
+    <!-- Sticky Bottom Audio Player -->
+    <div id="stickyPlayer" class="sticky-player-bar">
+        <div class="sticky-player-inner">
+            <button id="stickyPlayerClose" class="sticky-player-close" aria-label="Close Player">&times;</button>
+            <div id="stickyPlayerIframe" class="sticky-player-iframe">
+                <!-- Spotify Iframe will be injected here -->
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Scroll animations
+        // --- Shared Intersection Observer ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) entry.target.classList.add("visible");
             });
         }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll(".fade-in, .fade-in-left, .fade-in-right").forEach(el => observer.observe(el));
 
-        // Hamburger Menu Logic
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
+        // --- Mobile Menu Toggle ---
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
         function toggleMenu(open) {
-            hamburger.classList.toggle('open', open);
-            mobileMenu.classList.toggle('open', open);
-            hamburger.setAttribute('aria-expanded', open);
-            document.body.style.overflow = open ? 'hidden' : '';
+            hamburger.classList.toggle("open", open);
+            mobileMenu.classList.toggle("open", open);
+            hamburger.setAttribute("aria-expanded", open);
+            document.body.style.overflow = open ? "hidden" : "";
         }
 
-        
-hamburger.addEventListener('click', () => {
-            const isOpen = mobileMenu.classList.contains('open');
+        hamburger.addEventListener("click", () => {
+            const isOpen = mobileMenu.classList.contains("open");
             toggleMenu(!isOpen);
         });
 
-        // Close menu on link click
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', () => toggleMenu(false));
+        document.querySelectorAll(".mobile-nav-link").forEach(link => {
+            link.addEventListener("click", () => toggleMenu(false));
         });
+
+        // --- Sticky Player Logic ---
+        const stickyPlayer = document.getElementById("stickyPlayer");
+        const stickyPlayerIframe = document.getElementById("stickyPlayerIframe");
+        const stickyPlayerClose = document.getElementById("stickyPlayerClose");
+
+        document.addEventListener("click", (e) => {
+            const anchor = e.target.closest("a[href*=\"spotify.com\"], .play-spotify-link");
+            if (!anchor) return;
+            
+            e.preventDefault();
+            const url = anchor.getAttribute("href");
+            let spotifyId = "";
+            
+            if (url && url.includes("spotify.com/album/")) spotifyId = url.split("spotify.com/album/")[1].split("?")[0];
+            else if (url && url.includes("spotify.com/track/")) spotifyId = "track/" + url.split("spotify.com/track/")[1].split("?")[0];
+            else if (url && url.includes("spotify.com/")) {
+                const parts = url.split("spotify.com/")[1].split("?")[0].split("/");
+                if (parts.length >= 2) spotifyId = parts[0] + "/" + parts[1];
+            }
+            
+            if (spotifyId) {
+                const embedType = spotifyId.includes("/") ? spotifyId : "album/" + spotifyId;
+                stickyPlayerIframe.innerHTML = `<iframe style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/${embedType}?utm_source=generator\" width=\"100%\" height=\"80\" frameBorder=\"0\" allowfullscreen allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>`;
+                stickyPlayer.classList.add("visible");
+            } else if (url) {
+                window.open(url, "_blank");
+            }
+        });
+
+        if (stickyPlayerClose) stickyPlayerClose.addEventListener("click", () => { stickyPlayer.classList.remove("visible"); stickyPlayerIframe.innerHTML = ""; });
     </script>
     <script src="consent.js"></script>
 </body>

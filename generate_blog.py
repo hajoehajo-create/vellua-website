@@ -73,8 +73,8 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{track_title} | vellúa Blog</title>
-    <meta name="description" content="Read about our new release {track_title}. A space of peace in a loud world.">
+    <title>{{track_title}} | vellúa Blog</title>
+    <meta name="description" content="Read about our new release {{track_title}}. A space of peace in a loud world.">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="style.css?v=1.5">
     <style>
@@ -108,36 +108,40 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
                 <li><a href="index.html#discography">Discography</a></li>
                 <li><a href="featured-artists.html">Artists</a></li>
                 <li><a href="index.html#about">About</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="blog.html" style="color: #cbd5e1;">Blog</a></li>
+                <li><a href="https://open.spotify.com/album/3D4yYorqh6vee5xRwL0CWo" class="nav-cta play-spotify-link">Listen</a></li>
             </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
-        
         <a href="index.html#home" class="mobile-nav-link">Home</a>
         <a href="index.html#discography" class="mobile-nav-link">Discography</a>
         <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
         <a href="index.html#about" class="mobile-nav-link">About</a>
+        <a href="blog.html" class="mobile-nav-link">Blog</a>
         <a href="index.html#contact" class="mobile-nav-link">Contact</a>
-        <a href="blog.html" class="mobile-nav-link" style="color: var(--accent);">Blog</a>
+        <a href="https://open.spotify.com/album/3D4yYorqh6vee5xRwL0CWo" class="mobile-nav-link play-spotify-link" style="color: #1DB954;">Listen Now</a>
     </div>
     <main class="content-wrapper">
         <section class="blog-detail-section fade-in">
             <a href="blog.html" class="back-link">← Back to Overview</a>
             <div class="blog-detail-header">
-                <span class="blog-detail-meta">{track_date} • New Release</span>
-                <h1>{track_title}</h1>
+                <span class="blog-detail-meta">{{track_date}} • New Release</span>
+                <h1>{{track_title}}</h1>
             </div>
             <div class="blog-hero-image">
-                <img src="{cover_url}" alt="{track_title} Cover">
+                <img src="{{cover_url}}" alt="{{track_title}} Cover">
             </div>
             <div class="blog-body">
-                {html_content}
+                {{html_content}}
                 
                 <div class="spotify-embed">
-                    <div class="spotify-consent-placeholder" data-spotify-src="https://open.spotify.com/embed/album/{spotify_embed_id}?utm_source=generator" onclick="window.loadSpotifyIframe(this)"><svg viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.503 17.31c-.22.36-.683.473-1.043.252-2.82-1.722-6.368-2.112-10.55-1.157-.412.093-.822-.164-.916-.576-.094-.412.163-.822.576-.916 4.6-.328 8.514.1 11.674 2.04.36.222.473.684.252 1.044zm1.47-3.262c-.276.45-.86.595-1.31.32-3.228-1.984-8.15-2.56-11.967-1.402-.507.153-1.04-.135-1.194-.642-.153-.51.135-1.043.642-1.196 4.368-1.324 9.774-.672 13.51 1.628.45.276.595.86.32 1.31zm.126-3.41c-3.872-2.3-10.264-2.512-13.97-1.387-.593.18-1.223-.155-1.403-.748-.18-.593.155-1.223.748-1.403 4.267-1.296 11.322-1.037 15.79 1.615.534.317.71 1 .39 1.536z"/></svg> Click to load Spotify Player</div>
+                    <div class="spotify-consent-placeholder" data-spotify-src="https://open.spotify.com/embed/album/{{spotify_embed_id}}?utm_source=generator" onclick="window.loadSpotifyIframe(this)"><svg viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.503 17.31c-.22.36-.683.473-1.043.252-2.82-1.722-6.368-2.112-10.55-1.157-.412.093-.822-.164-.916-.576-.094-.412.163-.822.576-.916 4.6-.328 8.514.1 11.674 2.04.36.222.473.684.252 1.044zm1.47-3.262c-.276.45-.86.595-1.31.32-3.228-1.984-8.15-2.56-11.967-1.402-.507.153-1.04-.135-1.194-.642-.153-.51.135-1.043.642-1.196 4.368-1.324 9.774-.672 13.51 1.628.45.276.595.86.32 1.31zm.126-3.41c-3.872-2.3-10.264-2.512-13.97-1.387-.593.18-1.223-.155-1.403-.748-.18-.593.155-1.223.748-1.403 4.267-1.296 11.322-1.037 15.79 1.615.534.317.71 1 .39 1.536z"/></svg> Click to load Spotify Player</div>
                 </div>
 
                 <p class="blog-signature">
@@ -149,40 +153,80 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
         </section>
     </main>
 
+    <!-- Sticky Bottom Audio Player -->
+    <div id=\"stickyPlayer\" class=\"sticky-player-bar\">
+        <div class=\"sticky-player-inner\">
+            <button id=\"stickyPlayerClose\" class=\"sticky-player-close\" aria-label=\"Close Player\">&times;</button>
+            <div id=\"stickyPlayerIframe\" class=\"sticky-player-iframe\">
+                <!-- Spotify Iframe will be injected here -->
+            </div>
+        </div>
+    </div>
+
     <script>
+        // --- Shared Intersection Observer ---
         const observer = new IntersectionObserver((entries) => {{
             entries.forEach(entry => {{
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) entry.target.classList.add(\"visible\");
             }});
         }}, {{ threshold: 0.1 }});
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.querySelectorAll(\".fade-in, .fade-in-left, .fade-in-right\").forEach(el => observer.observe(el));
 
-        // Mobile menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
+        // --- Mobile Menu Toggle ---
+        const hamburger = document.getElementById(\"hamburger\");
+        const mobileMenu = document.getElementById(\"mobileMenu\");
 
-        function toggleMenu(open) {
-            hamburger.classList.toggle('open', open);
-            mobileMenu.classList.toggle('open', open);
-            document.body.style.overflow = open ? 'hidden' : '';
-        }
+        function toggleMenu(open) {{
+            hamburger.classList.toggle(\"open\", open);
+            mobileMenu.classList.toggle(\"open\", open);
+            hamburger.setAttribute(\"aria-expanded\", open);
+            document.body.style.overflow = open ? \"hidden\" : \"\";
+        }}
 
-        hamburger.addEventListener('click', () => {
-            const isOpen = mobileMenu.classList.contains('open');
+        hamburger.addEventListener(\"click\", () => {{
+            const isOpen = mobileMenu.classList.contains(\"open\");
             toggleMenu(!isOpen);
-        });
+        }});
 
-        
+        document.querySelectorAll(\".mobile-nav-link\").forEach(link => {{
+            link.addEventListener(\"click\", () => toggleMenu(false));
+        }});
 
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', () => toggleMenu(false));
-        });
+        // --- Sticky Player Logic ---
+        const stickyPlayer = document.getElementById(\"stickyPlayer\");
+        const stickyPlayerIframe = document.getElementById(\"stickyPlayerIframe\");
+        const stickyPlayerClose = document.getElementById(\"stickyPlayerClose\");
+
+        document.addEventListener(\"click\", (e) => {{
+            const anchor = e.target.closest(\"a[href*=\\\"spotify.com\\\"], .play-spotify-link\");
+            if (!anchor) return;
+            
+            e.preventDefault();
+            const url = anchor.getAttribute(\"href\");
+            let spotifyId = \"\";
+            
+            if (url && url.includes(\"spotify.com/album/\")) spotifyId = url.split(\"spotify.com/album/\")[1].split(\"?\")[0];
+            else if (url && url.includes(\"spotify.com/track/\")) spotifyId = \"track/\" + url.split(\"spotify.com/track/\")[1].split(\"?\")[0];
+            else if (url && url.includes(\"spotify.com/\")) {{
+                const parts = url.split(\"spotify.com/\")[1].split(\"?\")[0].split(\"/\");
+                if (parts.length >= 2) spotifyId = parts[0] + \"/\" + parts[1];
+            }}
+            
+            if (spotifyId) {{
+                const embedType = spotifyId.includes(\"/\") ? spotifyId : \"album/\" + spotifyId;
+                stickyPlayerIframe.innerHTML = `<iframe style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/${{embedType}}?utm_source=generator\" width=\"100%\" height=\"80\" frameBorder=\"0\" allowfullscreen allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>`;
+                stickyPlayer.classList.add(\"visible\");
+            }} else if (url) {{
+                window.open(url, \"_blank\");
+            }}
+        }});
+
+        if (stickyPlayerClose) stickyPlayerClose.addEventListener(\"click\", () => {{ stickyPlayer.classList.remove(\"visible\"); stickyPlayerIframe.innerHTML = \"\"; }});
     </script>
-    <script src="consent.js"></script>
+    <script src=\"consent.js\"></script>
 </body>
 </html>
-"""
+\"\"\"
     # HTML speichern
     filepath = os.path.join(os.path.dirname(__file__), filename)
     with open(filepath, 'w', encoding='utf-8') as f:
