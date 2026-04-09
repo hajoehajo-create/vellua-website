@@ -159,16 +159,9 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
     
     # 3. Blog-Übersichtsseite aktualisieren
     update_blog_index(track_title, track_date, cover_url, filename)
-
-def update_blog_index(track_title, track_date, cover_url, filename):
-    index_path = os.path.join(os.path.dirname(__file__), 'blog.html')
-    if not os.path.exists(index_path):
-        return
-        
-    with open(index_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-        
-    new_card = f"""
+    
+def get_new_card(track_title, track_date, cover_url, filename):
+    return f"""
             <a href="{filename}" class="blog-card fade-in">
                 <img class="blog-img" src="{cover_url}" alt="{track_title} Cover">
                 <div class="blog-content">
@@ -178,12 +171,43 @@ def update_blog_index(track_title, track_date, cover_url, filename):
                     <span class="blog-readmore">Read full story →</span>
                 </div>
             </a>"""
+
+def update_blog_index(track_title, track_date, cover_url, filename):
+    index_path = os.path.join(os.path.dirname(__file__), 'blog.html')
+    if not os.path.exists(index_path):
+        return
+        
+    with open(index_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+        
+    new_card = get_new_card(track_title, track_date, cover_url, filename)
             
     content = content.replace('<div class="blog-grid">', f'<div class="blog-grid">{new_card}', 1)
     
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(content)
     print("✅ Blog-Übersicht (blog.html) erfolgreich aktualisiert!")
+    
+    update_index_preview(new_card)
+
+def update_index_preview(new_card):
+    import re
+    index_path = os.path.join(os.path.dirname(__file__), 'index.html')
+    if not os.path.exists(index_path): return
+    with open(index_path, 'r', encoding='utf-8') as f: content = f.read()
+    
+    grid_match = re.search(r'(<div class="blog-grid" id="index-blog-grid"[^>]*>)(.*?)(</div>\s*<div style="text-align: center;">)', content, re.DOTALL)
+    if not grid_match: return
+    
+    cards = re.findall(r'<a href="[^"]+".*?</a>', grid_match.group(2), re.DOTALL)
+    cards.insert(0, new_card)
+    cards = cards[:3]  # Only keep the newest 3
+    
+    new_inner = "\n                " + "\n                ".join(cards) + "\n            "
+    new_content = content[:grid_match.start()] + grid_match.group(1) + new_inner + grid_match.group(3) + content[grid_match.end():]
+    
+    with open(index_path, 'w', encoding='utf-8') as f: f.write(new_content)
+    print("✅ Startseite (index.html) Blog Preview mit Top 3 Artikel aktualisiert!")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate a blog post for a new Vellúa release.')
