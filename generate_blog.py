@@ -270,7 +270,7 @@ def update_sitemap(filename):
         f.write(content)
     print(f"✅ Sitemap aktualisiert: {new_url}")
     
-def get_new_card(track_title, track_date, cover_url, filename):
+def get_new_grid_card(track_title, track_date, cover_url, filename):
     return f"""
             <a href="{filename}" class="blog-card fade-in">
                 <img class="blog-img" src="{cover_url}" alt="{track_title} Cover">
@@ -282,6 +282,18 @@ def get_new_card(track_title, track_date, cover_url, filename):
                 </div>
             </a>"""
 
+def get_new_slide_card(track_title, track_date, cover_url, filename):
+    return f"""
+                        <a href="{filename}" class="blog-slide-card">
+                            <img class="blog-slide-img" src="{cover_url}" alt="{track_title} Cover">
+                            <div class="blog-slide-content">
+                                <span class="blog-meta">{track_date} • New Release</span>
+                                <h3 class="blog-title">{track_title}</h3>
+                                <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                                <span class="blog-readmore">Read full story →</span>
+                            </div>
+                        </a>"""
+
 def update_blog_index(track_title, track_date, cover_url, filename):
     index_path = os.path.join(os.path.dirname(__file__), 'blog.html')
     if not os.path.exists(index_path):
@@ -290,7 +302,7 @@ def update_blog_index(track_title, track_date, cover_url, filename):
     with open(index_path, 'r', encoding='utf-8') as f:
         content = f.read()
         
-    new_card = get_new_card(track_title, track_date, cover_url, filename)
+    new_card = get_new_grid_card(track_title, track_date, cover_url, filename)
             
     content = content.replace('<div class="blog-grid">', f'<div class="blog-grid">{new_card}', 1)
     
@@ -298,26 +310,41 @@ def update_blog_index(track_title, track_date, cover_url, filename):
         f.write(content)
     print("✅ Blog-Übersicht (blog.html) erfolgreich aktualisiert!")
     
-    update_index_preview(new_card)
+    update_index_preview(track_title, track_date, cover_url, filename)
 
-def update_index_preview(new_card):
+def update_index_preview(track_title, track_date, cover_url, filename):
     import re
     index_path = os.path.join(os.path.dirname(__file__), 'index.html')
     if not os.path.exists(index_path): return
     with open(index_path, 'r', encoding='utf-8') as f: content = f.read()
     
-    grid_match = re.search(r'(<div class="blog-grid" id="index-blog-grid"[^>]*>)(.*?)(</div>\s*<div style="text-align: center;">)', content, re.DOTALL)
-    if not grid_match: return
+    # Target the new slider container
+    slider_pattern = re.compile(r'(<div class="blog-slider" id="blogSlider">)(.*?)(</div>)', re.DOTALL)
+    match = slider_pattern.search(content)
+    if not match: 
+        print("⚠️  Warning: Slider element #blogSlider not found in index.html")
+        return
     
-    cards = re.findall(r'<a href="[^"]+".*?</a>', grid_match.group(2), re.DOTALL)
-    cards.insert(0, new_card)
-    cards = cards[:3]  # Only keep the newest 3
+    # Extract existing cards
+    existing_cards = re.findall(r'(<a href="[^"]+".*?class="blog-slide-card".*?</a>)', match.group(2), re.DOTALL)
     
-    new_inner = "\n                " + "\n                ".join(cards) + "\n            "
-    new_content = content[:grid_match.start()] + grid_match.group(1) + new_inner + grid_match.group(3) + content[grid_match.end():]
+    # Create the new card specifically for the slider
+    new_card = get_new_slide_card(track_title, track_date, cover_url, filename)
+    
+    # Check if this article already exists in the slider and remove it to avoid duplicates
+    existing_cards = [c for c in existing_cards if f'href="{filename}"' not in c]
+    
+    # Prepend new card
+    all_cards = [new_card] + existing_cards
+    
+    # Keep the latest 6 for the slider
+    final_cards = all_cards[:6]
+    
+    new_inner = "\n" + "\n".join(final_cards) + "\n                        "
+    new_content = content[:match.start()] + match.group(1) + new_inner + match.group(3) + content[match.end():]
     
     with open(index_path, 'w', encoding='utf-8') as f: f.write(new_content)
-    print("✅ Startseite (index.html) Blog Preview mit Top 3 Artikel aktualisiert!")
+    print("✅ Startseite (index.html) Blog-Slider aktualisiert!")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate a blog post for a new Vellúa release.')

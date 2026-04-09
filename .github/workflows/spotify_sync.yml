@@ -27,10 +27,11 @@ jobs:
         run: |
           pip install python-dotenv paramiko
 
-      - name: Fetch Latest Discography
+      - name: Fetch Latest Discography & Generate Blog
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CI: "true"
         run: |
           python fetch_discography.py
@@ -39,5 +40,5 @@ jobs:
         run: |
           git config --global user.name "Vellúa Bot"
           git config --global user.email "bot@vellua-music.com"
-          git add index.html
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-sync: Updated Spotify discography in index.html" && git push)
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-sync: Updated Spotify discography and generated blog article" && git push)

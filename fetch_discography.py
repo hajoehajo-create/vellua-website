@@ -156,15 +156,40 @@ def fetch_discography():
 def update_index_html(discography):
     if not discography:
         return
-        
     latest = discography[0]
     
     with open("index.html", "r") as f:
         content = f.read()
     
-    # Update Hero Section
     import re
     
+    # Check if this is a NEW release compared to current index.html
+    # We look for the hero title to determine the "top" song
+    current_title_match = re.search(r'<h2 class="slide-title">(.*?)</h2>', content)
+    current_title = current_title_match.group(1) if current_title_match else ""
+    
+    is_new_release = (latest["title"].lower().strip() != current_title.lower().strip())
+    
+    if is_new_release:
+        print(f"✨ New release detected: {latest['title']} (Previous: {current_title})")
+        print("🚀 Triggering automated blog post generation...")
+        try:
+            from generate_blog import create_blog_post_html
+            create_blog_post_html(
+                track_title=latest["title"],
+                track_date=latest["display_date"],
+                cover_url=latest["image"],
+                spotify_embed_id=latest["id"]
+            )
+            # Re-read index.html because generate_blog.py modified it (blog preview)
+            with open("index.html", "r") as f:
+                content = f.read()
+        except Exception as e:
+            print(f"⚠️  Warning: Blog generation failed: {e}")
+    else:
+        print(f"✅ Already up to date: {latest['title']}")
+
+    # Update Hero Section
     # Update OpenGraph Tags
     content = re.sub(r'(<meta property="og:title" content=")(.*?)(">)', f'\\1{latest["title"]} - vellúa\\3', content)
     content = re.sub(r'(<meta property="og:image" content=")(.*?)(">)', f'\\1{latest["image"]}\\3', content)
@@ -180,8 +205,8 @@ def update_index_html(discography):
     image_pattern = re.compile(r'(<div class="hero-image-wrapper">\s*<img src=")(.*?)(".*?\balt=")(.*?)(".*?\bclass="slide-image".*?>)', re.DOTALL)
     content = image_pattern.sub(f'\\1{latest["image"]}\\3{latest["title"]} Cover\\5', content)
     
-    # Update Hero Spotify Link
-    content = re.sub(r'(<a href=")(.*?)(" target="_blank" class="cta-button">Listen on Spotify</a>)', f'\\1{latest["url"]}\\3', content)
+    # Update Hero Spotify Link (targeting the play-spotify-link class)
+    content = re.sub(r'(<a href=")(.*?)(" class="cta-button play-spotify-link">Listen</a>)', f'\\1{latest["url"]}\\3', content)
     
     # Update Hero Description
     hero_desc_pattern = re.compile(r'(<p class="hero-desc">)(.*?)(</p>)', re.DOTALL)
@@ -201,15 +226,11 @@ def update_index_html(discography):
     
     print("\nSuccessfully updated index.html with Hero Section and Grid.")
     
-    # Auto-deploy locally if not in CI
+    # Auto-push/deploy handled by GitHub Actions or local git
     if not os.environ.get("CI"):
-        try:
-            from deploy import deploy as sftp_deploy
-            sftp_deploy()
-        except ImportError:
-            print("Local deploy.py not found. Skipping auto-deploy.")
+        print("Local environment: To push changes, run: git add . && git commit -m \"Manual Sync\" && git push")
     else:
-        print("CI environment detected. Skipping local deployment python script. GitHub Actions will push to FTP.")
+        print("CI environment: GitHub Actions will commit and push changes.")
 
 if __name__ == "__main__":
     fetch_discography()
