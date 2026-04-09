@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuando Vuelvo A Mirarte | vellúa Blog</title>
+    
+    <meta name="description" content="Read about our new release Cuando Vuelvo A Mirarte.">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.5">
+
+    <style>
+        .blog-detail-section {
+            min-height: 100vh;
+            max-width: 800px; /* Schmaler als das Grid, damit der Text besser lesbar ist */
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .back-link:hover {
+            color: var(--accent);
+            transform: translateX(-5px);
+        }
+
+        .blog-detail-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .blog-detail-meta {
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .blog-detail-header h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .blog-hero-image {
+            width: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            aspect-ratio: 16/9; /* Breitbild für den Header sieht oft besser aus */
+        }
+
+        .blog-hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .blog-body {
+            background: rgba(255, 255, 255, 0.03); /* Etwas dunklerer Glassmorphism */
+            padding: 3rem 4rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .blog-body p {
+            margin-bottom: 1.8rem;
+            font-weight: 300;
+        }
+
+        .blog-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .blog-signature {
+            margin-top: 3rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: right;
+            font-style: italic;
+        }
+
+        .blog-signature strong {
+            color: var(--text-primary);
+            font-style: normal;
+            font-size: 1.2rem;
+        }
+
+        .spotify-embed {
+            margin: 3rem 0;
+            width: 100%;
+        }
+
+        /* Mobile Adjustments for Blog Detail */
+        @media (max-width: 768px) {
+            .blog-detail-header h1 { font-size: 2.5rem; }
+            .blog-body { padding: 2rem 1.5rem; font-size: 1.05rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Animated Background -->
+    <div class="bg-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <a href="index.html" class="logo"><img src="images/vellua-white-big.png" alt="vellúa logo" decoding="async"></a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#discography">Discography</a></li>
+                <li><a href="featured-artists.html">Artists</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="blog.html" style="color: #cbd5e1;">Blog</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+        <a href="index.html#home" class="mobile-nav-link">Home</a>
+        <a href="index.html#discography" class="mobile-nav-link">Discography</a>
+        <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
+        <a href="index.html#about" class="mobile-nav-link">About</a>
+        <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+        <a href="blog.html" class="mobile-nav-link" style="color: var(--accent);">Blog</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <section class="blog-detail-section fade-in">
+            <a href="blog.html" class="back-link">← Back to Overview</a>
+            
+            <div class="blog-detail-header">
+                <span class="blog-detail-meta">03. April 2026 • New Release</span>
+                <h1>Cuando Vuelvo A Mirarte</h1>
+            </div>
+            
+            <!-- Breites Header Image -->
+            <div class="blog-hero-image">
+                <img src="https://i.scdn.co/image/ab67616d0000b273f290cab5b3115fbe69cf0f7e" alt="Cuando Vuelvo A Mirarte Cover">
+            </div>
+
+            <!-- Text Content -->
+            <div class="blog-body">
+                <p>Welcome to the release of our newest single <strong>'Cuando Vuelvo A Mirarte'</strong>. It is always a special moment for us to share a new track with the world—especially one that is so deeply rooted in inner peace and reflection.</p>
+                <p>In a world that often turns too loudly and too fast, our goal was to build small, invisible bridges. This piece emerged from a very intimate moment of improvisation. The delicate acoustic guitars interweave with deep, electronic ambiance, creating a space where you are simply allowed to be.</p>
+                
+                <!-- Spotify Embed -->
+                <div class="spotify-embed">
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/3D4yYorqh6vee5xRwL0CWo?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <p>We hope this song grants you as much peace as it did for us while writing it. Put on your headphones, close your eyes, and let the sounds carry you.</p>
+
+                <p class="blog-signature">
+                    Warm regards,<br>
+                    <strong>Haval & Joe</strong><br>
+                    vellúa
+                </p>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="glass-footer modern-footer">
+                <div class="footer-brand">
+                    <img src="images/vellua-white-big.png" alt="vellúa logo" class="footer-logo">
+                    <p>&copy; 2026 vellúa music<br><span class="footer-subtext">Spaces of Peace</span></p>
+                </div>
+                <div class="footer-center">
+                    <a href="https://www.vellua-music.com/files/vellua-press-kit.pdf" target="_blank" class="press-btn" aria-label="Download Presskit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Electronic Press Kit
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('open');
+            hamburger.classList.toggle('open', !isOpen);
+            mobileMenu.classList.toggle('open', !isOpen);
+            document.body.style.overflow = !isOpen ? 'hidden' : '';
+        });
+    </script>
+</body>
+</html>

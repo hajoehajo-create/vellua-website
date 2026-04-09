@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vellúa | Blog</title>
+    
+    <meta name="description" content="Read the latest news and thoughts from vellúa.">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.5">
+
+    <style>
+        .blog-section {
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .blog-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            display: flex;
+            flex-direction: column;
+            border-radius: 6px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
+        }
+
+        .blog-img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .blog-meta {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .blog-excerpt {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .blog-readmore {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .blog-card:hover .blog-readmore {
+            color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Animated Background -->
+    <div class="bg-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <a href="index.html" class="logo"><img src="images/vellua-white-big.png" alt="vellúa logo" decoding="async"></a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#discography">Discography</a></li>
+                <li><a href="featured-artists.html">Artists</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="blog.html" style="color: #cbd5e1;">Blog</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+        <a href="index.html#home" class="mobile-nav-link">Home</a>
+        <a href="index.html#discography" class="mobile-nav-link">Discography</a>
+        <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
+        <a href="index.html#about" class="mobile-nav-link">About</a>
+        <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+        <a href="blog.html" class="mobile-nav-link" style="color: var(--accent);">Blog</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <section class="blog-section fade-in">
+            <div class="blog-header">
+                <h1>Stories & Sounds</h1>
+                <p>Welcome to our journal. Exploring the connections between music, silence, and stories.</p>
+            </div>
+
+            <div class="blog-grid">
+            <a href="cuando-vuelvo-a-mirarte.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b273f290cab5b3115fbe69cf0f7e" alt="Cuando Vuelvo A Mirarte Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">03. April 2026 • New Release</span>
+                    <h2 class="blog-title">Cuando Vuelvo A Mirarte</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            <a href="and-i-see.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b273171cb89ac73e7ad198048ef7" alt="And I See Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">12. März 2026 • New Release</span>
+                    <h2 class="blog-title">And I See</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            <a href="and-i-cry.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b2734e020dfee681ca51c99d10ed" alt="And I Cry Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">06. Februar 2026 • New Release</span>
+                    <h2 class="blog-title">And I Cry</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            <a href="lost-calls.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b27330cb8b6ee5d707337c30ecd8" alt="Lost Calls Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">07. Dezember 2025 • New Release</span>
+                    <h2 class="blog-title">Lost Calls</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            <a href="non-si-fatta-vedere.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b2736de967c150d3c89354232d20" alt="Non Si È Fatta Vedere Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">12. November 2025 • New Release</span>
+                    <h2 class="blog-title">Non Si È Fatta Vedere</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            <a href="traces-in-the-sky.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b2737b113e89bf7ddbeabb300ee2" alt="Traces In The Sky Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">10. Oktober 2025 • New Release</span>
+                    <h2 class="blog-title">Traces In The Sky</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            <a href="milele-na-milele.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b2732b779fc805e73097d6d0feb0" alt="Milele Na Milele Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">12. September 2025 • New Release</span>
+                    <h2 class="blog-title">Milele Na Milele</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            <a href="nightsky-rainbow.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b2737492cde1ad8fecc6dc6d3691" alt="Nightsky Rainbow Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">15. August 2025 • New Release</span>
+                    <h2 class="blog-title">Nightsky Rainbow</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            <a href="chiquita.html" class="blog-card fade-in">
+                <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b273273ffbcb3f75f9cd5ccad6bd" alt="Chiquita Cover">
+                <div class="blog-content">
+                    <span class="blog-meta">01. Juli 2025 • New Release</span>
+                    <h2 class="blog-title">Chiquita</h2>
+                    <p class="blog-excerpt">Discover the acoustic journey behind our new song. A space of peace in a loud world.</p>
+                    <span class="blog-readmore">Read full story →</span>
+                </div>
+            </a>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="glass-footer modern-footer">
+                <div class="footer-brand">
+                    <img src="images/vellua-white-big.png" alt="vellúa logo" class="footer-logo">
+                    <p>&copy; 2026 vellúa music<br><span class="footer-subtext">Spaces of Peace</span></p>
+                </div>
+                <div class="footer-center">
+                    <a href="https://www.vellua-music.com/files/vellua-press-kit.pdf" target="_blank" class="press-btn" aria-label="Download Presskit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Electronic Press Kit
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('open');
+            hamburger.classList.toggle('open', !isOpen);
+            mobileMenu.classList.toggle('open', !isOpen);
+            document.body.style.overflow = !isOpen ? 'hidden' : '';
+        });
+    </script>
+</body>
+</html>

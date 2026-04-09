@@ -86,11 +86,17 @@ def fetch_all_releases(artist_id, token):
     groups = ["album", "single", "compilation"]
     
     for group in groups:
-        url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?include_groups={group}"
+        url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?include_groups={group}&limit=50"
         while url:
-            # We must be careful about the 'limit' parameter again since it was causing 400s
-            # If the 'next' URL from Spotify contains a limit, it usually works.
-            response = spotify_request(url, token)
+            try:
+                response = spotify_request(url, token)
+            except urllib.error.HTTPError as e:
+                # Spotify sometimes returns a 400 "Invalid limit" on pagination next URLs incorrectly.
+                if e.code == 400:
+                    print(f"Pagination stopped for {group} due to Spotify 400 limit bug.")
+                    break
+                raise
+                
             for item in response.get("items", []):
                 if item["id"] not in seen_ids:
                     seen_ids.add(item["id"])
