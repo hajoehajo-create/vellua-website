@@ -160,6 +160,40 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
     # 3. Blog-Übersichtsseite aktualisieren
     update_blog_index(track_title, track_date, cover_url, filename)
     
+    # 4. Sitemap aktualisieren
+    update_sitemap(filename)
+
+def update_sitemap(filename):
+    from datetime import date
+    sitemap_path = os.path.join(os.path.dirname(__file__), 'sitemap.xml')
+    if not os.path.exists(sitemap_path):
+        return
+    
+    with open(sitemap_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    new_url = f"https://vellua-music.com/{filename}"
+    
+    # Nicht doppelt einfügen
+    if new_url in content:
+        print(f"ℹ️  Sitemap enthält bereits: {filename}")
+        return
+    
+    today = date.today().isoformat()
+    new_entry = f"""   <url>
+      <loc>{new_url}</loc>
+      <lastmod>{today}</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+   </url>
+</urlset>"""
+    
+    content = content.replace('</urlset>', new_entry)
+    
+    with open(sitemap_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+    print(f"✅ Sitemap aktualisiert: {new_url}")
+    
 def get_new_card(track_title, track_date, cover_url, filename):
     return f"""
             <a href="{filename}" class="blog-card fade-in">
