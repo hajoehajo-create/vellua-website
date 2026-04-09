@@ -152,7 +152,7 @@
                             </div>
                             <h3>Denez Prigent</h3>
                             <p class="artist-title-mini">Breton Folk Legend</p>
-                            <a href="featured-artists.html#denez-prigent" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#denez-prigent" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Ciwan Haco -->
@@ -162,7 +162,7 @@
                             </div>
                             <h3>Ciwan Haco</h3>
                             <p class="artist-title-mini">Kurdish Icon</p>
-                            <a href="featured-artists.html#ciwan-haco" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#ciwan-haco" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Tara Mamedova -->
@@ -172,7 +172,7 @@
                             </div>
                             <h3>Tara Mamedova</h3>
                             <p class="artist-title-mini">Kurdish Voice</p>
-                            <a href="featured-artists.html#tara-mamedova" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#tara-mamedova" class="cta-button outline small">View Artist</a>
                         </div>
 
                         <!-- Stein Bull-Hansen -->
@@ -182,7 +182,7 @@
                             </div>
                             <h3>Stein Bull-Hansen</h3>
                             <p class="artist-title-mini">Guitar</p>
-                            <a href="featured-artists.html#stein-bull-hansen" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#stein-bull-hansen" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Tatiana Shishkova -->
@@ -192,7 +192,7 @@
                             </div>
                             <h3>Tatiana Shishkova</h3>
                             <p class="artist-title-mini">Singer</p>
-                            <a href="featured-artists.html#tatiana-shishkova" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#tatiana-shishkova" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Hamed Torkoman -->
@@ -202,7 +202,7 @@
                             </div>
                             <h3>Hamed Torkoman</h3>
                             <p class="artist-title-mini">Setar / Singer</p>
-                            <a href="featured-artists.html#hamed-torkaman" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#hamed-torkaman" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Román Lacrouts -->
@@ -212,7 +212,7 @@
                             </div>
                             <h3>Román Lacrouts</h3>
                             <p class="artist-title-mini">Charango</p>
-                            <a href="featured-artists.html#roman-lacrouts" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#roman-lacrouts" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Hugo Lee -->
@@ -222,7 +222,7 @@
                             </div>
                             <h3>Hugo Lee</h3>
                             <p class="artist-title-mini">Saxophone</p>
-                            <a href="featured-artists.html#hugo-lee" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#hugo-lee" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Ilia Mazya -->
@@ -232,7 +232,7 @@
                             </div>
                             <h3>Ilia Mazya</h3>
                             <p class="artist-title-mini">Duduk</p>
-                            <a href="featured-artists.html#ilia-mazya" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#ilia-mazya" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Carolina Teruel -->
@@ -242,7 +242,7 @@
                             </div>
                             <h3>Carolina Teruel</h3>
                             <p class="artist-title-mini">Cello</p>
-                            <a href="featured-artists.html#carolina-teruel" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#carolina-teruel" class="cta-button outline small">View Artist</a>
                         </div>
         
                         <!-- Andrei Skliarov -->
@@ -252,7 +252,7 @@
                             </div>
                             <h3>Andrei Skliarov</h3>
                             <p class="artist-title-mini">Bass</p>
-                            <a href="featured-artists.html#andrei-skliarov" class="cta-button outline small">View Story</a>
+                            <a href="featured-artists.html#andrei-skliarov" class="cta-button outline small">View Artist</a>
                         </div>
                     </div>
                 </div>
@@ -546,14 +546,17 @@
         }
 
         // --- Slider Utility (Generalized Swipe/Tap Logic) ---
-        function setupSlider(sliderId, prevBtnId, nextBtnId, cardClass) {
+        function setupSlider(sliderId, prevBtnClass, nextBtnClass, cardClass) {
             const slider = document.getElementById(sliderId);
-            const prevBtns = document.querySelectorAll('.' + prevBtnId);
-            const nextBtns = document.querySelectorAll('.' + nextBtnId);
             if (!slider) return;
+            
+            const wrapper = slider.closest('.slider-wrapper') || slider.parentElement;
+            const prevBtns = wrapper.querySelectorAll('.' + prevBtnClass);
+            const nextBtns = wrapper.querySelectorAll('.' + nextBtnClass);
 
             let index = 0;
             let startX = 0, currentX = 0, isDragging = false, hasMoved = false;
+            let touchStartTime = 0;
 
             function getInfo() {
                 const card = slider.querySelector('.' + cardClass);
@@ -587,12 +590,19 @@
             nextBtns.forEach(btn => btn.addEventListener('click', () => { const info = getInfo(); if (info && index < info.maxIndex) { index += info.visibleItems; update(); } }));
             prevBtns.forEach(btn => btn.addEventListener('click', () => { const info = getInfo(); if (info && index > 0) { index -= info.visibleItems; update(); } }));
 
-            slider.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; hasMoved = false; slider.style.transition = 'none'; }, { passive: true });
+            slider.addEventListener('touchstart', (e) => { 
+                startX = e.touches[0].clientX; 
+                isDragging = true; 
+                hasMoved = false; 
+                slider.style.transition = 'none';
+                touchStartTime = Date.now();
+            }, { passive: true });
+
             slider.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
                 currentX = e.touches[0].clientX;
                 const diffX = currentX - startX;
-                if (Math.abs(diffX) > 10) hasMoved = true;
+                if (Math.abs(diffX) > 15) hasMoved = true;
                 const info = getInfo();
                 if (info) slider.style.transform = `translateX(${-index * (info.cardWidth + info.gap) + diffX}px)`;
             }, { passive: true });
@@ -602,22 +612,29 @@
                 isDragging = false;
                 slider.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
                 const diffX = currentX - startX;
+                const duration = Date.now() - touchStartTime;
                 const info = getInfo();
-                if (info && Math.abs(diffX) > 50) {
+                
+                if (info && (Math.abs(diffX) > 50 || (Math.abs(diffX) > 20 && duration < 200))) {
                     if (diffX < 0 && index < info.maxIndex) index += info.visibleItems;
                     else if (diffX > 0 && index > 0) index -= info.visibleItems;
                 }
                 update();
             });
 
-            slider.addEventListener('click', (e) => { if (hasMoved) { e.preventDefault(); e.stopPropagation(); } }, true);
+            slider.addEventListener('click', (e) => { 
+                if (hasMoved) { 
+                    e.preventDefault(); 
+                    e.stopPropagation(); 
+                } 
+            }, true);
 
             window.addEventListener('resize', update);
             setTimeout(update, 100);
         }
 
         setupSlider('artistSlider', 'prev-btn', 'next-btn', 'artist-card-mini');
-        setupSlider('blogSlider', 'blogPrevBtn', 'blogNextBtn', 'blog-slide-card');
+        setupSlider('blogSlider', 'prev-btn', 'next-btn', 'blog-slide-card');
 
         // --- Sticky Player Logic ---
         const stickyPlayer = document.getElementById('stickyPlayer');
