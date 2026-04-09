@@ -6,12 +6,20 @@ import urllib.parse
 import urllib.error
 from datetime import datetime
 
-# Load .env manually to avoid dependencies
-with open(".env") as f:
-    env = dict(line.strip().split("=", 1) for line in f if "=" in line)
+# Load from system environment variables first (for CI/CD), fallback to local .env
+CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
 
-CLIENT_ID = env.get("SPOTIFY_CLIENT_ID")
-CLIENT_SECRET = env.get("SPOTIFY_CLIENT_SECRET")
+if not CLIENT_ID or not CLIENT_SECRET:
+    try:
+        with open(".env") as f:
+            env = dict(line.strip().split("=", 1) for line in f if "=" in line and not line.strip().startswith("#"))
+            if not CLIENT_ID:
+                CLIENT_ID = env.get("SPOTIFY_CLIENT_ID")
+            if not CLIENT_SECRET:
+                CLIENT_SECRET = env.get("SPOTIFY_CLIENT_SECRET")
+    except FileNotFoundError:
+        pass
 
 def get_token():
     if not CLIENT_ID or not CLIENT_SECRET:
@@ -189,9 +197,15 @@ def update_index_html(discography):
     
     print("\nSuccessfully updated index.html with Hero Section and Grid.")
     
-    # Auto-deploy
-    from deploy import deploy as sftp_deploy
-    sftp_deploy()
+    # Auto-deploy locally if not in CI
+    if not os.environ.get("CI"):
+        try:
+            from deploy import deploy as sftp_deploy
+            sftp_deploy()
+        except ImportError:
+            print("Local deploy.py not found. Skipping auto-deploy.")
+    else:
+        print("CI environment detected. Skipping local deployment python script. GitHub Actions will push to FTP.")
 
 if __name__ == "__main__":
     fetch_discography()
