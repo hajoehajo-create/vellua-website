@@ -21,7 +21,8 @@ def deploy():
     files_to_upload = glob.glob("*.html") + [
         "style.css", 
         "robots.txt",
-        "sitemap.xml"
+        "sitemap.xml",
+        "consent.js"
     ]
     
     try:
@@ -61,6 +62,21 @@ def deploy():
                 if os.path.isfile(local_img_path):
                     print(f"  Uploading {img_file}...")
                     sftp.put(local_img_path, os.path.join(remote_images_dir, img_file))
+
+        # Upload fonts directory
+        if os.path.exists("fonts"):
+            remote_fonts_dir = "fonts"
+            try:
+                sftp.mkdir(remote_fonts_dir)
+            except IOError:
+                pass # Already exists
+            
+            print("Uploading fonts directory...")
+            for font_file in os.listdir("fonts"):
+                local_font_path = os.path.join("fonts", font_file)
+                if os.path.isfile(local_font_path):
+                    print(f"  Uploading {font_file}...")
+                    sftp.put(local_font_path, os.path.join(remote_fonts_dir, font_file))
 
         sftp.close()
         ssh.close()
