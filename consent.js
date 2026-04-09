@@ -64,6 +64,8 @@
     function showBanner() {
         if (document.getElementById('consentBanner')) return;
 
+        var existingConsent = getConsent() || { analytics: false, media: false };
+
         var banner = document.createElement('div');
         banner.id = 'consentBanner';
         banner.innerHTML = `
@@ -86,13 +88,13 @@
                     </div>
                     <div class="consent-toggle-row">
                         <label>
-                            <input type="checkbox" id="toggleAnalytics">
+                            <input type="checkbox" id="toggleAnalytics" ${existingConsent.analytics ? 'checked' : ''}>
                             <span><strong>Analytics</strong> — Google Analytics 4 via Tag Manager. Helps us understand our audience.</span>
                         </label>
                     </div>
                     <div class="consent-toggle-row">
                         <label>
-                            <input type="checkbox" id="toggleMedia">
+                            <input type="checkbox" id="toggleMedia" ${existingConsent.media ? 'checked' : ''}>
                             <span><strong>External Media</strong> — Spotify player embeds for listening to our music.</span>
                         </label>
                     </div>
@@ -120,8 +122,13 @@
         document.getElementById('consentEssential').addEventListener('click', function() {
             var consent = { essential: true, analytics: false, media: false };
             setConsent(consent);
-            applyConsent(consent);
-            closeBanner();
+            // Wir deaktivieren GTM/Spotify natürlich nicht on-the-fly (erfordert Reload), aber für Konsistenz:
+            if (existingConsent && (existingConsent.analytics || existingConsent.media)) {
+                window.location.reload(); 
+            } else {
+                applyConsent(consent);
+                closeBanner();
+            }
         });
 
         document.getElementById('consentSettings').addEventListener('click', function() {
@@ -137,8 +144,14 @@
                 media: document.getElementById('toggleMedia').checked
             };
             setConsent(consent);
-            applyConsent(consent);
-            closeBanner();
+            
+            // Wenn etwas deaktiviert wurde, was vorher an war, brauchen wir einen Reload
+            if (existingConsent && ((existingConsent.analytics && !consent.analytics) || (existingConsent.media && !consent.media))) {
+                window.location.reload();
+            } else {
+                applyConsent(consent);
+                closeBanner();
+            }
         });
     }
 
@@ -152,8 +165,12 @@
 
     // --- Footer Link: Re-open Settings ---
     window.velluaOpenConsentSettings = function() {
-        localStorage.removeItem(STORAGE_KEY);
         showBanner();
+        // Direkt die Settings aufklappen
+        var details = document.getElementById('consentDetails');
+        if (details && !details.classList.contains('open')) {
+            document.getElementById('consentSettings').click();
+        }
     };
 
     // --- Init ---
