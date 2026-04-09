@@ -48,6 +48,7 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
         <a href="index.html#home" class="mobile-nav-link">Home</a>
         <a href="index.html#discography" class="mobile-nav-link">Discography</a>
         <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
@@ -259,7 +260,8 @@
             document.body.style.overflow = open ? 'hidden' : '';
         }
 
-        hamburger.addEventListener('click', () => {
+        if(document.getElementById('mobileMenuClose')) { document.getElementById('mobileMenuClose').addEventListener('click', () => toggleMenu(false)); }
+hamburger.addEventListener('click', () => {
             const isOpen = mobileMenu.classList.contains('open');
             toggleMenu(!isOpen);
         });

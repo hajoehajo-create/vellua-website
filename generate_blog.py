@@ -113,6 +113,16 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
             </ul>
         </div>
     </nav>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+        <a href="index.html#home" class="mobile-nav-link">Home</a>
+        <a href="index.html#discography" class="mobile-nav-link">Discography</a>
+        <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
+        <a href="index.html#about" class="mobile-nav-link">About</a>
+        <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+        <a href="blog.html" class="mobile-nav-link" style="color: var(--accent);">Blog</a>
+    </div>
     <main class="content-wrapper">
         <section class="blog-detail-section fade-in">
             <a href="blog.html" class="back-link">← Back to Overview</a>
@@ -146,6 +156,28 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
             }});
         }}, {{ threshold: 0.1 }});
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+        function toggleMenu(open) {
+            hamburger.classList.toggle('open', open);
+            mobileMenu.classList.toggle('open', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('open');
+            toggleMenu(!isOpen);
+        });
+
+        mobileMenuClose.addEventListener('click', () => toggleMenu(false));
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => toggleMenu(false));
+        });
     </script>
     <script src="consent.js"></script>
 </body>

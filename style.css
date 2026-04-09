@@ -174,7 +174,7 @@ h1, h2, h3, h4, .logo {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 200;
     background: rgba(15, 23, 42, 0.85); /* Increased opacity to compensate for removed blur */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
@@ -280,6 +280,19 @@ h1, h2, h3, h4, .logo {
 
 .mobile-menu-overlay a:hover {
     color: var(--accent);
+}
+
+.mobile-menu-close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 3rem;
+    cursor: pointer;
+    line-height: 1;
+    z-index: 210;
 }
 
 /* Main Content Wrapper */
