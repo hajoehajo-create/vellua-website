@@ -48,7 +48,7 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+        
         <a href="index.html#home" class="mobile-nav-link">Home</a>
         <a href="index.html#discography" class="mobile-nav-link">Discography</a>
         <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
@@ -67,7 +67,7 @@
 
             <div class="artist-showcase">
                 <!-- Denez Prigent -->
-                <div class="glass-card artist-card fade-in">
+                <div id="denez-prigent" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Denez-Prigent.png" alt="Denez Prigent" class="artist-zoom-in" decoding="async">
                     </div>
@@ -79,7 +79,7 @@
                 </div>
 
                 <!-- Ciwan Haco -->
-                <div class="glass-card artist-card fade-in">
+                <div id="ciwan-haco" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/ciwan-haco.png" alt="Ciwan Haco" class="artist-zoom-in" loading="lazy" decoding="async">
                     </div>
@@ -91,7 +91,7 @@
                 </div>
 
                 <!-- Tara Mamedova -->
-                <div class="glass-card artist-card fade-in">
+                <div id="tara-mamedova" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Tara-Mamedova.png" alt="Tara Mamedova" class="artist-zoom-in" loading="lazy" decoding="async">
                     </div>
@@ -103,7 +103,7 @@
                 </div>
 
                 <!-- Stein Bull-Hansen -->
-                <div class="glass-card artist-card fade-in">
+                <div id="stein-bull-hansen" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Stein-Bull-Hansen.jpg" alt="Stein Bull-Hansen" loading="lazy" decoding="async">
                     </div>
@@ -115,7 +115,7 @@
                 </div>
 
                 <!-- Tatiana Shishkova -->
-                <div class="glass-card artist-card fade-in">
+                <div id="tatiana-shishkova" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Tatiana-Shishkova.jpg" alt="Tatiana Shishkova" loading="lazy" decoding="async" style="object-position: center 15%;">
                     </div>
@@ -127,7 +127,7 @@
                 </div>
 
                 <!-- Román Lacrouts -->
-                <div class="glass-card artist-card fade-in">
+                <div id="roman-lacrouts" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Roman-Lacrouts.jpg" alt="Román Lacrouts" loading="lazy" decoding="async" style="object-position: center 10%;">
                     </div>
@@ -139,7 +139,7 @@
                 </div>
 
                 <!-- Hamed Torkaman -->
-                <div class="glass-card artist-card fade-in">
+                <div id="hamed-torkaman" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Hamed-Torkaman.jpg" alt="Hamed Torkaman" loading="lazy" decoding="async" style="object-position: center 18%;">
                     </div>
@@ -151,7 +151,7 @@
                 </div>
 
                 <!-- Carolina Teruel -->
-                <div class="glass-card artist-card fade-in">
+                <div id="carolina-teruel" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Carolina-Teruel.jpg" alt="Carolina Teruel" loading="lazy" decoding="async">
                     </div>
@@ -163,7 +163,7 @@
                 </div>
 
                 <!-- Ilia Mazya -->
-                <div class="glass-card artist-card fade-in">
+                <div id="ilia-mazya" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Ilia-Mazya.jpg" alt="Ilia Mazya" loading="lazy" decoding="async">
                     </div>
@@ -175,7 +175,7 @@
                 </div>
 
                 <!-- Hugo Lee -->
-                <div class="glass-card artist-card fade-in">
+                <div id="hugo-lee" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Hugo-Lee.jpg" alt="Hugo Lee" loading="lazy" decoding="async" style="object-position: center 12%;">
                     </div>
@@ -187,7 +187,7 @@
                 </div>
 
                 <!-- Andrei Skliarov -->
-                <div class="glass-card artist-card fade-in">
+                <div id="andrei-skliarov" class="glass-card artist-card fade-in">
                     <div class="artist-image">
                         <img src="images/Andrei-Skliarov.jpg" alt="Andrei Skliarov" loading="lazy" decoding="async">
                     </div>
@@ -260,7 +260,7 @@
             document.body.style.overflow = open ? 'hidden' : '';
         }
 
-        if(document.getElementById('mobileMenuClose')) { document.getElementById('mobileMenuClose').addEventListener('click', () => toggleMenu(false)); }
+        
 hamburger.addEventListener('click', () => {
             const isOpen = mobileMenu.classList.contains('open');
             toggleMenu(!isOpen);

@@ -282,18 +282,6 @@ h1, h2, h3, h4, .logo {
     color: var(--accent);
 }
 
-.mobile-menu-close {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    font-size: 3rem;
-    cursor: pointer;
-    line-height: 1;
-    z-index: 210;
-}
 
 /* Main Content Wrapper */
 .content-wrapper {

@@ -141,7 +141,7 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+        
         <a href="index.html#home" class="mobile-nav-link">Home</a>
         <a href="index.html#discography" class="mobile-nav-link">Discography</a>
         <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
@@ -152,14 +152,14 @@
 
     <!-- Main Content -->
     <main class="content-wrapper">
-        <section class="blog-section fade-in">
+        <section class="blog-section">
             <div class="blog-header">
                 <h1>Stories & Sounds</h1>
                 <p>Welcome to our journal. Exploring the connections between music, silence, and stories.</p>
             </div>
 
             <div class="blog-grid">
-            <a href="cuando-vuelvo-a-mirarte.html" class="blog-card fade-in">
+            <a href="cuando-vuelvo-a-mirarte.html" class="blog-card">
                 <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b273f290cab5b3115fbe69cf0f7e" alt="Cuando Vuelvo A Mirarte Cover">
                 <div class="blog-content">
                     <span class="blog-meta">03. April 2026 • New Release</span>
@@ -168,7 +168,7 @@
                     <span class="blog-readmore">Read full story →</span>
                 </div>
             </a>
-            <a href="and-i-see.html" class="blog-card fade-in">
+            <a href="and-i-see.html" class="blog-card">
                 <img class="blog-img" src="https://i.scdn.co/image/ab67616d0000b273171cb89ac73e7ad198048ef7" alt="And I See Cover">
                 <div class="blog-content">
                     <span class="blog-meta">12. März 2026 • New Release</span>
@@ -272,7 +272,7 @@
         // Mobile menu toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
-        if(document.getElementById('mobileMenuClose')) { document.getElementById('mobileMenuClose').addEventListener('click', () => toggleMenu(false)); }
+        
 hamburger.addEventListener('click', () => {
             const isOpen = mobileMenu.classList.contains('open');
             hamburger.classList.toggle('open', !isOpen);

@@ -115,7 +115,7 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
     </nav>
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+        
         <a href="index.html#home" class="mobile-nav-link">Home</a>
         <a href="index.html#discography" class="mobile-nav-link">Discography</a>
         <a href="featured-artists.html" class="mobile-nav-link">Artists</a>
@@ -160,7 +160,7 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
         // Mobile menu toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        
 
         function toggleMenu(open) {
             hamburger.classList.toggle('open', open);
@@ -173,7 +173,7 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
             toggleMenu(!isOpen);
         });
 
-        mobileMenuClose.addEventListener('click', () => toggleMenu(false));
+        
 
         document.querySelectorAll('.mobile-nav-link').forEach(link => {
             link.addEventListener('click', () => toggleMenu(false));
