@@ -15,12 +15,7 @@
     <meta property="og:url" content="https://vellua-website.vercel.app/">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <!-- Modern Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=1.5">
+<link rel="stylesheet" href="style.css?v=1.5">
 </head>
 
 <body>
@@ -443,6 +438,7 @@
                 <div class="footer-brand">
                     <img src="images/vellua-white-big.png" alt="vellúa logo" class="footer-logo">
                     <p>&copy; 2026 vellúa music<br><span class="footer-subtext">Spaces of Peace</span></p>
+                    <span class="consent-link" onclick="velluaOpenConsentSettings()">Cookie Settings</span>
                 </div>
                 <div class="footer-center">
                     <a href="https://www.vellua-music.com/files/vellua-press-kit.pdf" target="_blank" class="press-btn" aria-label="Download Presskit">
@@ -838,6 +834,7 @@
             setTimeout(updateBlogSlider, 100);
         }
     </script>
+    <script src="consent.js"></script>
 </body>
 
 </html>
