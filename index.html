@@ -839,9 +839,10 @@
         const stickyPlayerIframe = document.getElementById('stickyPlayerIframe');
         const stickyPlayerClose = document.getElementById('stickyPlayerClose');
 
-        document.querySelectorAll('.disco-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                // Nur im Desktop/Tablet wird der Player gepoppt, Mobile vielleicht auch? Wir probierens.
+        document.querySelectorAll('.disco-item').forEach(img => {
+            const anchor = img.closest('a');
+            if (!anchor) return;
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const url = this.getAttribute('href');
                 let spotifyId = '';
@@ -850,19 +851,22 @@
                     spotifyId = url.split('spotify.com/album/')[1].split('?')[0];
                 } else if (url && url.includes('spotify.com/track/')) {
                     spotifyId = url.split('spotify.com/track/')[1].split('?')[0];
-                    // Wir können auch den Track direkt embedden
                     spotifyId = 'track/' + spotifyId;
-                } else {
-                    spotifyId = 'album/' + spotifyId;
+                } else if (url && url.includes('spotify.com/')) {
+                    // Fallback to extract whatever comes after the domain for embeds
+                    const parts = url.split('spotify.com/')[1].split('?')[0].split('/');
+                    if(parts.length >= 2) {
+                         spotifyId = parts[0] + '/' + parts[1];
+                    }
                 }
                 
-                if (spotifyId && spotifyId !== 'album/') {
+                if (spotifyId) {
                     const embedType = spotifyId.includes('/') ? spotifyId : 'album/' + spotifyId;
                     const iframeUrl = `https://open.spotify.com/embed/${embedType}?utm_source=generator`;
                     stickyPlayerIframe.innerHTML = `<iframe style="border-radius:12px" src="${iframeUrl}" width="100%" height="80" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
                     stickyPlayer.classList.add('visible');
                 } else {
-                    window.open(url, '_blank');
+                    if (url) window.open(url, '_blank');
                 }
             });
         });
