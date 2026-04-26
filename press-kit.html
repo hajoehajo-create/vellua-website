@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vellúa | Electronic Press Kit</title>
+    
+    <meta name="description" content="Electronic Press Kit for vellúa. Discover the music, story, and media assets of the global music project by Haval & Joe Haco.">
+    
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" href="style.css?v=1.5">
+    <style>
+        /* Specific EPK Styles */
+        .epk-hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .epk-hero-content h1 {
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .epk-hero-content p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .epk-section {
+            width: 100%;
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .epk-card {
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .epk-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .bio-short {
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--accent);
+            padding-left: 1.5rem;
+        }
+
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .asset-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .asset-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .asset-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .asset-item:hover img {
+            opacity: 1;
+        }
+
+        .asset-download {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: white;
+            text-decoration: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .quote-box {
+            font-style: italic;
+            font-size: 1.4rem;
+            text-align: center;
+            padding: 3rem;
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: "“";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 6rem;
+            opacity: 0.1;
+            font-family: serif;
+        }
+
+        .quote-author {
+            display: block;
+            margin-top: 1rem;
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tech-rider {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            opacity: 0.5;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .download-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 850px) {
+            .epk-grid { grid-template-columns: 1fr; }
+            .epk-hero-content h1 { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Animated Background -->
+    <div class="bg-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <a href="index.html#home" class="logo"><img src="images/vellua-white-big.png" alt="vellúa logo"></a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#discography">Discography</a></li>
+                <li><a href="featured-artists.html">Artists</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="press-kit.html" class="active" style="color: var(--accent);">EPK</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content-wrapper">
+        
+        <!-- EPK Hero -->
+        <header class="epk-hero">
+            <div class="epk-hero-content fade-in">
+                <p class="slide-tag">Electronic Press Kit</p>
+                <h1>vellúa</h1>
+                <p>Spaces of Peace in a Loud World</p>
+            </div>
+        </header>
+
+        <!-- Biography Section -->
+        <section class="epk-section">
+            <div class="glass-card epk-card fade-in">
+                <div class="epk-grid">
+                    <div>
+                        <h2>Biography</h2>
+                        <div class="bio-short">
+                            Vellúa is a global music project that builds a bridge between silence and understanding, blending Middle Eastern traditions with modern sonic landscapes.
+                        </div>
+                        <p>Founded by brothers Haval and Joe Haco, Vellúa creates multidimensional soundscapes designed to transcend borders. Their music features instruments and vocals from diverse traditions, combined with their own invented language, "Vellúan", which communicates directly with human emotions.</p>
+                        <p style="margin-top: 1rem;">From the exotic journey of their debut album "Portrait of Souls" to collaborations with legends like Ciwan Haco and Denez Prigent, Vellúa has gained international recognition for their atmospheric and spiritually resonant compositions.</p>
+                    </div>
+                    <div>
+                        <img src="images/joe-and-haval.png" alt="Vellúa Duo" style="width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Music & Video Section -->
+        <section class="epk-section">
+            <div class="epk-grid">
+                <div class="glass-card epk-card fade-in">
+                    <h2>Latest Music</h2>
+                    <p style="margin-bottom: 1.5rem;">Listen to our latest releases on Spotify.</p>
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/3D4yYorqh6vee5xRwL0CWo?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+                <div class="glass-card epk-card fade-in">
+                    <h2>Visuals</h2>
+                    <p style="margin-bottom: 1.5rem;">Experience the atmosphere of Vellúa through video.</p>
+                    <div class="video-container">
+                        <!-- Placeholder for a representative video -->
+                        <iframe src="https://www.youtube.com/embed/videoseries?list=UU2ke9MG1RiDYczKwaKlOOXW" title="Vellúa Music" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Press Quotes & Achievements -->
+        <section class="epk-section">
+            <div class="glass-card epk-card fade-in quote-box">
+                "Vellúa is more than music; it's a sanctuary of sound that connects cultures and souls in a way that feels both ancient and futuristic."
+                <span class="quote-author">— Cultural Review</span>
+            </div>
+            
+            <div class="glass-card epk-card fade-in">
+                <div class="epk-grid">
+                    <div>
+                        <h3>Highlights</h3>
+                        <ul style="list-style: none; padding-top: 1rem;">
+                            <li style="margin-bottom: 1rem;">✨ <strong>Kurdish Film Festival Berlin:</strong> Composed the official theme.</li>
+                            <li style="margin-bottom: 1rem;">🤝 <strong>Global Collaborations:</strong> Worked with Denez Prigent (Hans Zimmer/Ridley Scott collaborator).</li>
+                            <li style="margin-bottom: 1rem;">🌍 <strong>Universal Language:</strong> Developed "Vellúan" for emotional storytelling.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>At a Glance</h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.8rem 0; color: var(--text-secondary);">Origin</td>
+                                <td style="padding: 0.8rem 0; text-align: right;">Global / Berlin</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.8rem 0; color: var(--text-secondary);">Genre</td>
+                                <td style="padding: 0.8rem 0; text-align: right;">World / Atmospheric / Cinematic</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 0.8rem 0; color: var(--text-secondary);">Active Since</td>
+                                <td style="padding: 0.8rem 0; text-align: right;">2018</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assets Download -->
+        <section class="epk-section">
+            <div class="glass-card epk-card fade-in">
+                <h2>Media Assets</h2>
+                <p>High-resolution photos, logos, and technical documents for press and promoters.</p>
+                
+                <div class="asset-grid">
+                    <div class="asset-item">
+                        <img src="images/joe-and-haval.png" alt="Press Photo 1">
+                        <a href="#" class="asset-download">High-Res JPG</a>
+                    </div>
+                    <div class="asset-item">
+                        <img src="images/ciwan-haco.png" alt="Press Photo 2">
+                        <a href="#" class="asset-download">High-Res JPG</a>
+                    </div>
+                    <div class="asset-item" style="background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
+                        <img src="images/vellua-white-big.png" alt="Logo" style="width: auto; height: 40px; object-fit: contain;">
+                        <a href="#" class="asset-download">PNG Logo</a>
+                    </div>
+                </div>
+
+                <div class="epk-grid" style="margin-top: 3rem;">
+                    <div class="tech-rider">
+                        <span class="tech-icon">📄</span>
+                        <div>
+                            <h4>Technical Rider</h4>
+                            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Stage plot and technical requirements.</p>
+                            <a href="#" class="cta-button outline small" style="padding: 0.4rem 1rem;">Download PDF</a>
+                        </div>
+                    </div>
+                    <div class="tech-rider">
+                        <span class="tech-icon">📜</span>
+                        <div>
+                            <h4>Full Bio</h4>
+                            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Detailed story and project history.</p>
+                            <a href="#" class="cta-button outline small" style="padding: 0.4rem 1rem;">Download PDF</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <a href="#" class="cta-button primary download-all-btn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download Full Media Kit (.ZIP)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="epk-section">
+            <div class="glass-card epk-card fade-in" style="text-align: center;">
+                <h2>Contact</h2>
+                <p style="margin-bottom: 2rem;">For booking inquiries, press requests, or collaborative opportunities.</p>
+                
+                <div class="epk-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Booking & Management</h4>
+                        <p>Haval Haco</p>
+                        <p><a href="mailto:info@vellua-music.com" style="color: white; text-decoration: none;">info@vellua-music.com</a></p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Press & Media</h4>
+                        <p>Joe Haco</p>
+                        <p><a href="mailto:info@vellua-music.com" style="color: white; text-decoration: none;">info@vellua-music.com</a></p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem; display: flex; justify-content: center; gap: 1.5rem;">
+                    <a href="https://open.spotify.com/artist/2ke9MG1RiDYczKwaKlOOXW" target="_blank" class="cta-button outline small">Spotify</a>
+                    <a href="https://instagram.com/velluamusic" target="_blank" class="cta-button outline small">Instagram</a>
+                    <a href="https://www.youtube.com/c/vellua" target="_blank" class="cta-button outline small">YouTube</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="glass-footer modern-footer">
+                <div class="footer-brand">
+                    <img src="images/vellua-white-big.png" alt="vellúa logo" class="footer-logo">
+                    <p>&copy; 2026 vellúa music<br><span class="footer-subtext">Spaces of Peace</span></p>
+                </div>
+                <div class="footer-center">
+                    <a href="index.html" class="press-btn">
+                         Back to Website
+                    </a>
+                </div>
+                <div class="social-icons enhanced-icons">
+                    <p style="font-size: 0.8rem; opacity: 0.5;">EPK v2.0</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Use the same observer as index.html
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>

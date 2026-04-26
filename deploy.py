@@ -22,7 +22,8 @@ def deploy():
         "style.css", 
         "robots.txt",
         "sitemap.xml",
-        "consent.js"
+        "consent.js",
+        ".htaccess"
     ]
     
     try:

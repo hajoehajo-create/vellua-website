@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteRule ^about/?$ /index.html#about [R=301,NE,L]
+RewriteRule ^blog/tara-mamedova/?$ /featured-artists.html#tara-mamedova [R=301,NE,L]
+RewriteRule ^blog/the-serenity-of-chillout-music/?$ /blog.html [R=301,L]
+RewriteRule ^blog/?$ /blog.html [R=301,L]
+RewriteRule ^home/?$ / [R=301,L]
+RewriteRule ^category/uncategorized/?$ /blog.html [R=301,L]
+RewriteRule ^collaboration-with-famous-singer-denez-prigent/?$ /featured-artists.html#denez-prigent [R=301,NE,L]
+RewriteRule ^vellua-interview-with-k2k-radio-london/?$ /blog.html [R=301,L]
