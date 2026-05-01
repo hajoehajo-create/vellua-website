@@ -86,7 +86,7 @@ def fetch_all_releases(artist_id, token):
     groups = ["album", "single", "compilation"]
     
     for group in groups:
-        url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?include_groups={group}&limit=50"
+        url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?include_groups={group}"
         while url:
             try:
                 response = spotify_request(url, token)

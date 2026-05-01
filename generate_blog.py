@@ -22,17 +22,23 @@ The core philosophy is creating 'Spaces of Peace' in a loud world.
 
 TASK:
 Write a beautifully engaging, SEO-optimized blog post (approx. 400-600 words) about our new track '{{track_title}}'. 
+Song Context:
+- Mood: {{track_mood}}
+- Instruments: {{track_instruments}}
+- Story/Background: {{track_story}}
+
 Output MUST be raw HTML content containing only <p>, <h2>, <h3>, <strong>, <em>, and <ul>/<li> tags. Do not wrap it in a full HTML document.
 
 STRUCTURE TO FOLLOW STRICTLY:
-1. Introduction: Hook the reader (keep in mind the 25-54 age range across Turkey, US, Germany, France). Mention the track name in robust bold. Natural SEO keywords (e.g., 'ambient acoustic music', 'world fusion', 'finding peace').
-2. The Multicultural Journey (H2): Describe how acoustic sounds naturally cross borders.
+1. Introduction: Hook the reader (keep in mind the 25-54 age range). Mention the track name in robust bold. Natural SEO keywords (e.g., 'ambient acoustic music', 'world fusion', 'finding peace').
+   CRITICAL: Do NOT start with generic phrases like "In a world...". Write a highly creative, unique opening that directly ties into the mood ({{track_mood}}) and instruments ({{track_instruments}}) of this specific song!
+2. The Song's Core (H2): Dive into the specific story, mood, or instruments of this track. 
 3. Your Space of Peace (H2): Address the reader with 'you' and explain how they can use this piece of music to escape the daily rush.
 4. Formatting: Keep paragraphs short for readability on mobile.
 Do NOT write a concluding signature, we add it automatically.
 """
 
-def generate_blog_content(track_title):
+def generate_blog_content(track_title, track_mood, track_instruments, track_story):
     from dotenv import load_dotenv
     load_dotenv()
     
@@ -46,8 +52,13 @@ def generate_blog_content(track_title):
         
     print(f"Versuche KI Text für '{track_title}' mit Gemini (REST) zu generieren...")
     
+    prompt = PROMPT_TEMPLATE.replace('{track_title}', track_title)
+    prompt = prompt.replace('{track_mood}', track_mood)
+    prompt = prompt.replace('{track_instruments}', track_instruments)
+    prompt = prompt.replace('{track_story}', track_story)
+    
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
-    full_prompt = f"System Context: You are a professional music blog writer for vellúa.\n\n{PROMPT_TEMPLATE.replace('{track_title}', track_title)}"
+    full_prompt = f"System Context: You are a professional music blog writer for vellúa.\n\n{prompt}"
     
     data = {"contents": [{"parts": [{"text": full_prompt}]}]}
     req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers={"Content-Type": "application/json"})
@@ -60,12 +71,12 @@ def generate_blog_content(track_title):
         print(f"API Fehler: {e}")
         exit(1)
 
-def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
+def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id, track_mood="ambient, peaceful", track_instruments="acoustic instruments", track_story="A new journey into sound."):
     # Dateiname automatisch aus Songname generieren: "mein-neuer-song.html"
     filename = re.sub(r'[^a-z0-9]+', '-', track_title.lower()).strip('-') + '.html'
     
     # 1. Text von KI generieren lassen
-    html_content = generate_blog_content(track_title)
+    html_content = generate_blog_content(track_title, track_mood, track_instruments, track_story)
     
     # 2. Template zusammenbauen
     template = f"""<!DOCTYPE html>
@@ -226,7 +237,7 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
     <script src=\"consent.js\"></script>
 </body>
 </html>
-\"\"\"
+"""
     # HTML speichern
     filepath = os.path.join(os.path.dirname(__file__), filename)
     with open(filepath, 'w', encoding='utf-8') as f:
@@ -352,6 +363,9 @@ if __name__ == "__main__":
     parser.add_argument('--date', default='15. May 2026', help='Release Date')
     parser.add_argument('--cover', default='https://i.scdn.co/image/ab67616d0000b273f290cab5b3115fbe69cf0f7e', help='Spotify Image URL')
     parser.add_argument('--spotify-id', default='3D4yYorqh6vee5xRwL0CWo', help='Spotify Album ID')
+    parser.add_argument('--mood', default='ambient, peaceful', help='Mood of the song')
+    parser.add_argument('--instruments', default='acoustic guitar, subtle percussion', help='Instruments used')
+    parser.add_argument('--story', default='A new journey into sound.', help='Background story of the song')
     args = parser.parse_args()
 
-    create_blog_post_html(args.title, args.date, args.cover, args.spotify_id)
+    create_blog_post_html(args.title, args.date, args.cover, args.spotify_id, args.mood, args.instruments, args.story)
