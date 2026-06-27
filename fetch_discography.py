@@ -66,18 +66,7 @@ def spotify_request(url, token):
         print(f"General Error in spotify_request: {e}")
         raise
 
-def fetch_discography():
-    token = get_token()
-    
-    # Search for artist "vellúa"
-    query = urllib.parse.quote("vellúa")
-    search_url = f"https://api.spotify.com/v1/search?q={query}&type=artist&limit=1"
-    search_results = spotify_request(search_url, token)
-    
-    if not search_results["artists"]["items"]:
-        print("Artist not found.")
-        return
-    
+
 def fetch_all_releases(artist_id, token):
     all_releases = []
     seen_ids = set()

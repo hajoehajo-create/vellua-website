@@ -14,36 +14,35 @@ TARGET AUDIENCE METRICS (For AI Context):
 """
 
 PROMPT_TEMPLATE = f"""
-You are the ghostwriter for the global acoustic duo 'vellúa' (Haval & Joe). 
-You write comprehensive, SEO-optimized, and GEO-optimized blog articles for their new music releases. 
-The core philosophy is creating 'Spaces of Peace' in a loud world.
+You are a critical, insightful, and highly articulate music journalist writing for a prestigious indie/world music magazine.
+You are reviewing the newest release from the global acoustic duo 'vellúa' (Haval & Joe).
+Write from a third-person, objective, yet deeply appreciative journalistic perspective. Do NOT write as a PR ghostwriter or the band itself.
 
 {AUDIENCE_PERSONA}
 
 TASK:
-Write a beautifully engaging, SEO-optimized blog post (approx. 400-600 words) about our new track '{{track_title}}'. 
-Song Context:
-- Mood: {{track_mood}}
-- Instruments: {{track_instruments}}
-- Story/Background: {{track_story}}
+Write a beautifully engaging, SEO-optimized music review (approx. 400-600 words) about the new track '{{track_title}}'. 
+To understand the song's depth, you MUST deeply analyze the provided ALBUM COVER ARTWORK. 
+Infer the song's mood, emotional landscape, and fictional acoustic instrumentation (e.g. "soaring acoustic guitars," "melancholic traditional strings," "earthy percussions") directly from the visual aesthetics, colors, and atmosphere of the artwork.
 
 Output MUST be raw HTML content containing only <p>, <h2>, <h3>, <strong>, <em>, and <ul>/<li> tags. Do not wrap it in a full HTML document.
 
 STRUCTURE TO FOLLOW STRICTLY:
-1. Introduction: Hook the reader (keep in mind the 25-54 age range). Mention the track name in robust bold. Natural SEO keywords (e.g., 'ambient acoustic music', 'world fusion', 'finding peace').
-   CRITICAL: Do NOT start with generic phrases like "In a world...". Write a highly creative, unique opening that directly ties into the mood ({{track_mood}}) and instruments ({{track_instruments}}) of this specific song!
-2. The Song's Core (H2): Dive into the specific story, mood, or instruments of this track. 
-3. Your Space of Peace (H2): Address the reader with 'you' and explain how they can use this piece of music to escape the daily rush.
+1. Introduction: Hook the reader with a profound observation about the song's title and the visual mood of its artwork. Mention the track name in robust bold. Natural SEO keywords (e.g., 'ambient acoustic music', 'world fusion', 'finding peace').
+   CRITICAL: Do NOT start with generic phrases like "In a world...". Write a highly creative, unique opening worthy of a top-tier music critic!
+2. Sonic Landscape (H2): Describe the inferred instrumentation and musical journey based on the cover art. How does this song translate the visuals into acoustic world-fusion?
+3. A Space of Peace (H2): Explain how vellúa continues their philosophy of creating an escape from the daily rush, using this specific track as the prime example.
 4. Formatting: Keep paragraphs short for readability on mobile.
 Do NOT write a concluding signature, we add it automatically.
 """
 
-def generate_blog_content(track_title, track_mood, track_instruments, track_story):
+def generate_blog_content(track_title, cover_url):
     from dotenv import load_dotenv
     load_dotenv()
     
     import json
     import urllib.request
+    import base64
     gemini_key = os.environ.get("GEMINI_API_KEY")
     
     if not gemini_key:
@@ -52,15 +51,32 @@ def generate_blog_content(track_title, track_mood, track_instruments, track_stor
         
     print(f"Versuche KI Text für '{track_title}' mit Gemini (REST) zu generieren...")
     
+    # Download image and encode to base64
+    base64_image = None
+    if cover_url:
+        try:
+            req_img = urllib.request.Request(cover_url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req_img, timeout=10) as response:
+                image_data = response.read()
+                base64_image = base64.b64encode(image_data).decode('utf-8')
+        except Exception as e:
+            print(f"Warnung: Konnte Cover-Bild nicht laden für Analyse: {e}")
+
     prompt = PROMPT_TEMPLATE.replace('{track_title}', track_title)
-    prompt = prompt.replace('{track_mood}', track_mood)
-    prompt = prompt.replace('{track_instruments}', track_instruments)
-    prompt = prompt.replace('{track_story}', track_story)
     
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
-    full_prompt = f"System Context: You are a professional music blog writer for vellúa.\n\n{prompt}"
+    full_prompt = f"System Context: You are a professional music journalist reviewing a vellúa track.\n\n{prompt}"
     
-    data = {"contents": [{"parts": [{"text": full_prompt}]}]}
+    parts = [{"text": full_prompt}]
+    if base64_image:
+        parts.append({
+            "inline_data": {
+                "mime_type": "image/jpeg",
+                "data": base64_image
+            }
+        })
+        
+    data = {"contents": [{"parts": parts}]}
     req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers={"Content-Type": "application/json"})
     
     try:
@@ -69,14 +85,18 @@ def generate_blog_content(track_title, track_mood, track_instruments, track_stor
             return result["candidates"][0]["content"]["parts"][0]["text"]
     except Exception as e:
         print(f"API Fehler: {e}")
+        try:
+            print(e.read().decode())
+        except:
+            pass
         exit(1)
 
-def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id, track_mood="ambient, peaceful", track_instruments="acoustic instruments", track_story="A new journey into sound."):
+def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
     # Dateiname automatisch aus Songname generieren: "mein-neuer-song.html"
     filename = re.sub(r'[^a-z0-9]+', '-', track_title.lower()).strip('-') + '.html'
     
     # 1. Text von KI generieren lassen
-    html_content = generate_blog_content(track_title, track_mood, track_instruments, track_story)
+    html_content = generate_blog_content(track_title, cover_url)
     
     # 2. Template zusammenbauen
     template = f"""<!DOCTYPE html>
@@ -84,8 +104,8 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id, 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{track_title}} | vellúa Blog</title>
-    <meta name="description" content="Read about our new release {{track_title}}. A space of peace in a loud world.">
+    <title>{track_title} | vellúa Blog</title>
+    <meta name="description" content="Read about our new release {track_title}. A space of peace in a loud world.">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="style.css?v=1.5">
     <style>
@@ -142,17 +162,17 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id, 
         <section class="blog-detail-section fade-in">
             <a href="blog.html" class="back-link">← Back to Overview</a>
             <div class="blog-detail-header">
-                <span class="blog-detail-meta">{{track_date}} • New Release</span>
-                <h1>{{track_title}}</h1>
+                <span class="blog-detail-meta">{track_date} • New Release</span>
+                <h1>{track_title}</h1>
             </div>
             <div class="blog-hero-image">
-                <img src="{{cover_url}}" alt="{{track_title}} Cover">
+                <img src="{cover_url}" alt="{track_title} Cover">
             </div>
             <div class="blog-body">
-                {{html_content}}
+                {html_content}
                 
                 <div class="spotify-embed">
-                    <div class="spotify-consent-placeholder" data-spotify-src="https://open.spotify.com/embed/album/{{spotify_embed_id}}?utm_source=generator" onclick="window.loadSpotifyIframe(this)"><svg viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.503 17.31c-.22.36-.683.473-1.043.252-2.82-1.722-6.368-2.112-10.55-1.157-.412.093-.822-.164-.916-.576-.094-.412.163-.822.576-.916 4.6-.328 8.514.1 11.674 2.04.36.222.473.684.252 1.044zm1.47-3.262c-.276.45-.86.595-1.31.32-3.228-1.984-8.15-2.56-11.967-1.402-.507.153-1.04-.135-1.194-.642-.153-.51.135-1.043.642-1.196 4.368-1.324 9.774-.672 13.51 1.628.45.276.595.86.32 1.31zm.126-3.41c-3.872-2.3-10.264-2.512-13.97-1.387-.593.18-1.223-.155-1.403-.748-.18-.593.155-1.223.748-1.403 4.267-1.296 11.322-1.037 15.79 1.615.534.317.71 1 .39 1.536z"/></svg> Click to load Spotify Player</div>
+                    <div class="spotify-consent-placeholder" data-spotify-src="https://open.spotify.com/embed/album/{spotify_embed_id}?utm_source=generator" onclick="window.loadSpotifyIframe(this)"><svg viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.503 17.31c-.22.36-.683.473-1.043.252-2.82-1.722-6.368-2.112-10.55-1.157-.412.093-.822-.164-.916-.576-.094-.412.163-.822.576-.916 4.6-.328 8.514.1 11.674 2.04.36.222.473.684.252 1.044zm1.47-3.262c-.276.45-.86.595-1.31.32-3.228-1.984-8.15-2.56-11.967-1.402-.507.153-1.04-.135-1.194-.642-.153-.51.135-1.043.642-1.196 4.368-1.324 9.774-.672 13.51 1.628.45.276.595.86.32 1.31zm.126-3.41c-3.872-2.3-10.264-2.512-13.97-1.387-.593.18-1.223-.155-1.403-.748-.18-.593.155-1.223.748-1.403 4.267-1.296 11.322-1.037 15.79 1.615.534.317.71 1 .39 1.536z"/></svg> Click to load Spotify Player</div>
                 </div>
 
                 <p class="blog-signature">
@@ -330,7 +350,7 @@ def update_index_preview(track_title, track_date, cover_url, filename):
     with open(index_path, 'r', encoding='utf-8') as f: content = f.read()
     
     # Target the new slider container
-    slider_pattern = re.compile(r'(<div class="blog-slider" id="blogSlider">)(.*?)(</div>)', re.DOTALL)
+    slider_pattern = re.compile(r'(<div class="blog-slider" id="blogSlider">)(.*?)(\s*</div>\s*</div>\s*<button class="slider-btn next-btn" id="blogNextBtn")', re.DOTALL)
     match = slider_pattern.search(content)
     if not match: 
         print("⚠️  Warning: Slider element #blogSlider not found in index.html")
@@ -363,9 +383,6 @@ if __name__ == "__main__":
     parser.add_argument('--date', default='15. May 2026', help='Release Date')
     parser.add_argument('--cover', default='https://i.scdn.co/image/ab67616d0000b273f290cab5b3115fbe69cf0f7e', help='Spotify Image URL')
     parser.add_argument('--spotify-id', default='3D4yYorqh6vee5xRwL0CWo', help='Spotify Album ID')
-    parser.add_argument('--mood', default='ambient, peaceful', help='Mood of the song')
-    parser.add_argument('--instruments', default='acoustic guitar, subtle percussion', help='Instruments used')
-    parser.add_argument('--story', default='A new journey into sound.', help='Background story of the song')
     args = parser.parse_args()
 
-    create_blog_post_html(args.title, args.date, args.cover, args.spotify_id, args.mood, args.instruments, args.story)
+    create_blog_post_html(args.title, args.date, args.cover, args.spotify_id)
