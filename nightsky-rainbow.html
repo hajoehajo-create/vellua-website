@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://vellua-music.com/nightsky-rainbow.html">
     <title>Nightsky Rainbow | vellúa Blog</title>
     <meta name="description" content="Read about our new release Nightsky Rainbow. A space of peace in a loud world.">
     <link rel="icon" type="image/png" href="images/favicon.png">
@@ -24,6 +25,21 @@
         .spotify-embed { margin: 3rem 0; width: 100%; }
         @media (max-width: 768px) { .blog-detail-header h1 { font-size: 2.5rem; } .blog-body { padding: 2rem 1.5rem; font-size: 1.05rem; } }
     </style>
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//vellua-music.com/matomo/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
 </head>
 <body>
     <div class="bg-container">
@@ -91,6 +107,16 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     </script>
+        <!-- Sticky Cross-Discovery Bar -->
+    <div class="sticky-discovery-bar">
+        <div class="sticky-discovery-content">
+            <span class="sticky-discovery-title">🎵 Discover More Releases & Stories</span>
+        </div>
+        <div class="sticky-discovery-actions">
+            <a href="index.html#discography" class="cta-button outline small" data-track-category="Cross_Discovery" data-track-action="Click_Discography_Explore">Full Discography</a>
+            <a href="https://open.spotify.com/artist/2ke9MG1RiDYczKwaKlOOXW" target="_blank" class="cta-button play-spotify-link small cta-pulse" data-track-category="Conversion" data-track-action="Click_Spotify_Artist">Follow on Spotify</a>
+        </div>
+    </div>
     <script src="consent.js"></script>
 </body>
 </html>

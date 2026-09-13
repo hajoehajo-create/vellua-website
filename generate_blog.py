@@ -125,6 +125,21 @@ def create_blog_post_html(track_title, track_date, cover_url, spotify_embed_id):
         .spotify-embed {{ margin: 3rem 0; width: 100%; }}
         @media (max-width: 768px) {{ .blog-detail-header h1 {{ font-size: 2.5rem; }} .blog-body {{ padding: 2rem 1.5rem; font-size: 1.05rem; }} }}
     </style>
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {{
+    var u="//vellua-music.com/matomo/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  }})();
+</script>
+<!-- End Matomo Code -->
 </head>
 <body>
     <div class="bg-container">

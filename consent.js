@@ -189,6 +189,44 @@
         placeholder.parentNode.replaceChild(iframe, placeholder);
     };
 
+    // --- Matomo Event Tracking ---
+    window.trackMatomoEvent = function(category, action, name, value) {
+        if (window._paq) {
+            window._paq.push(['trackEvent', category, action, name || window.location.pathname, value]);
+        }
+    };
+
+    function initMatomoAutoTracking() {
+        document.body.addEventListener('click', function(e) {
+            var target = e.target.closest('a, button, .cta-button, .play-spotify-link, .disco-item, .artist-card');
+            if (!target) return;
+
+            var href = target.getAttribute('href') || '';
+            var category = target.getAttribute('data-track-category') || 'Engagement';
+            var action = target.getAttribute('data-track-action');
+            var label = target.getAttribute('data-track-label') || target.innerText.trim() || href;
+
+            if (!action) {
+                if (href.includes('spotify.com')) {
+                    category = 'Conversion';
+                    action = 'Click_Spotify';
+                } else if (href.includes('ko-fi.com')) {
+                    category = 'Conversion';
+                    action = 'Click_Kofi_Support';
+                } else if (target.classList.contains('disco-item')) {
+                    action = 'Click_Discography_Cover';
+                } else if (target.closest('.sticky-discovery-bar')) {
+                    category = 'Cross_Discovery';
+                    action = 'Click_Related_Release';
+                }
+            }
+
+            if (action) {
+                window.trackMatomoEvent(category, action, label);
+            }
+        });
+    }
+
     // --- Init ---
     document.addEventListener('DOMContentLoaded', function() {
         var consent = getConsent();
@@ -197,6 +235,7 @@
         } else {
             showBanner();
         }
+        initMatomoAutoTracking();
     });
 
 })();
